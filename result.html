@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Result · WFITN Anatomy</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img src="https://avatars.githubusercontent.com/u/269770510?v=4" alt="Course avatar">
+    <div>
+      <h1>Quiz result</h1>
+      <p id="nameLine">Loading...</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <p class="muted">Your score</p>
+      <div class="result-score"><span id="score">--</span>/<span id="total">40</span></div>
+      <p id="lateMessage" class="error" style="display:none"></p>
+      <div class="kpi-row" style="margin-top:20px">
+        <div class="kpi"><span class="muted">Percent</span><strong id="percent">--</strong></div>
+        <div class="kpi"><span class="muted">Cohort mean</span><strong id="mean">--</strong></div>
+        <div class="kpi"><span class="muted">SD</span><strong id="sd">--</strong></div>
+        <div class="kpi"><span class="muted">偏差値</span><strong id="deviation">--</strong></div>
+      </div>
+      <p class="muted small" style="margin-top:18px">Cohort values update as more participants submit. Explanations for missed questions will be emailed later by the administrator.</p>
+    </section>
+  </main>
+
+  <script>
+    const token = new URLSearchParams(window.location.search).get('token') || sessionStorage.getItem('wfitn_quiz_token') || '';
+    const fmt = (n, digits = 1) => Number(n).toFixed(digits);
+    async function init() {
+      if (!token) { window.location.href = '/'; return; }
+      const response = await fetch(`/api/result?token=${encodeURIComponent(token)}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Result not found.');
+      document.getElementById('nameLine').textContent = `${data.participant.givenName} ${data.participant.familyName} · ${data.participant.institute}`;
+      document.getElementById('score').textContent = data.score;
+      document.getElementById('total').textContent = data.total;
+      document.getElementById('percent').textContent = `${fmt(data.percent * 100, 1)}%`;
+      document.getElementById('mean').textContent = fmt(data.mean, 2);
+      document.getElementById('sd').textContent = fmt(data.sd, 2);
+      document.getElementById('deviation').textContent = fmt(data.deviation, 1);
+      if (data.participant.lateSeconds > 0) {
+        const el = document.getElementById('lateMessage');
+        el.style.display = 'block';
+        el.textContent = `Submission was ${data.participant.lateSeconds} seconds after the nominal time limit.`;
+      }
+    }
+    init().catch(error => {
+      document.querySelector('main').innerHTML = `<section class="panel"><div class="error">${error.message}</div></section>`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · WFITN Anatomy Quiz</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img id="avatar" src="https://avatars.githubusercontent.com/u/269770510?v=4" alt="Course avatar">
+    <div>
+      <h1 id="courseName">WFITN Anatomy Quiz Admin</h1>
+      <p>Scores · question statistics · Excel export · feedback emails</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="loginPanel" class="panel">
+      <h2>Admin login</h2>
+      <div id="loginMessage"></div>
+      <form id="loginForm" class="grid">
+        <div>
+          <label for="password">Admin password</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password">
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </section>
+
+    <div id="dashboard" style="display:none">
+      <section class="panel">
+        <div class="toolbar">
+          <button type="button" id="refreshButton" class="secondary">Refresh</button>
+          <a class="button" href="/api/admin/export.xlsx">Download Excel</a>
+          <button type="button" id="sendFeedbackButton" class="warn">Send missed-question feedback emails</button>
+          <button type="button" id="logoutButton" class="secondary">Logout</button>
+        </div>
+        <div id="message" style="margin-top:14px"></div>
+      </section>
+
+      <section class="panel qr-box">
+        <img id="qr" src="/api/admin/qr.png" alt="QR code">
+        <div>
+          <h2>Participant QR code</h2>
+          <p class="muted">Project this QR code at the end of the Zurich course. Participants scan it and register from their smartphones.</p>
+          <p><a href="/" target="_blank">Open participant entry page</a></p>
+          <button class="secondary" onclick="window.print()">Print QR page</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Summary</h2>
+        <div class="kpi-row">
+          <div class="kpi"><span class="muted">Registered</span><strong id="registeredCount">0</strong></div>
+          <div class="kpi"><span class="muted">Submitted</span><strong id="submittedCount">0</strong></div>
+          <div class="kpi"><span class="muted">Mean score</span><strong id="mean">0</strong></div>
+          <div class="kpi"><span class="muted">SD</span><strong id="sd">0</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Top 5 award candidates</h2>
+        <div id="top5" class="table-wrap"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Participants</h2>
+        <div id="participants" class="table-wrap"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Question correct rates</h2>
+        <div id="questionStats" class="table-wrap"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const loginPanel = document.getElementById('loginPanel');
+    const dashboard = document.getElementById('dashboard');
+    const message = document.getElementById('message');
+    const loginMessage = document.getElementById('loginMessage');
+    const fmt = (n, digits = 1) => Number(n || 0).toFixed(digits);
+    const esc = (value) => String(value ?? '').replace(/[&<>'\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','\"':'&quot;'}[ch]));
+    let smtpEnabled = false;
+
+    function show(el, text, type = 'error') {
+      el.innerHTML = text ? `<div class="${type}">${esc(text)}</div>` : '';
+    }
+
+    function badge(text, cls) { return `<span class="badge ${cls}">${text}</span>`; }
+    function pct(value) { return `${fmt(value * 100, 1)}%`; }
+    function dateText(value) { return value ? new Date(value).toLocaleString() : ''; }
+
+    async function loadSummary() {
+      const response = await fetch('/api/admin/summary');
+      if (response.status === 401) {
+        loginPanel.style.display = '';
+        dashboard.style.display = 'none';
+        return;
+      }
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to load admin data.');
+      loginPanel.style.display = 'none';
+      dashboard.style.display = '';
+      smtpEnabled = data.smtpEnabled;
+      document.getElementById('courseName').textContent = data.courseName;
+      document.getElementById('avatar').src = data.avatarUrl;
+      document.getElementById('registeredCount').textContent = data.registeredCount;
+      document.getElementById('submittedCount').textContent = data.submittedCount;
+      document.getElementById('mean').textContent = fmt(data.mean, 2);
+      document.getElementById('sd').textContent = fmt(data.sd, 2);
+      document.getElementById('sendFeedbackButton').disabled = !smtpEnabled || data.submittedCount === 0;
+      if (!smtpEnabled) show(message, 'SMTP is not configured. Excel export works, but feedback emails cannot be sent yet.', 'notice');
+      renderTop5(data.top5);
+      renderParticipants(data.participants, data.top5.map(p => p.id));
+      renderQuestionStats(data.questionStats);
+    }
+
+    function renderTop5(rows) {
+      if (!rows.length) { document.getElementById('top5').innerHTML = '<p class="muted">No submissions yet.</p>'; return; }
+      document.getElementById('top5').innerHTML = `<table><thead><tr><th>Rank</th><th>Name</th><th>Institute</th><th>Score</th><th>偏差値</th><th>Submitted</th></tr></thead><tbody>${rows.map((p, i) => `
+        <tr class="top5"><td>${i + 1}</td><td><strong>${esc(p.givenName)} ${esc(p.familyName)}</strong></td><td>${esc(p.institute)}</td><td>${p.score}/${p.total}</td><td>${fmt(p.deviation, 1)}</td><td>${dateText(p.submittedAt)}</td></tr>
+      `).join('')}</tbody></table>`;
+    }
+
+    function renderParticipants(rows, topIds) {
+      if (!rows.length) { document.getElementById('participants').innerHTML = '<p class="muted">No registrations yet.</p>'; return; }
+      const topSet = new Set(topIds);
+      document.getElementById('participants').innerHTML = `<table><thead><tr><th>Name</th><th>Email</th><th>Institute</th><th>Years</th><th>Subspeciality</th><th>Status</th><th>Score</th><th>偏差値</th><th>Feedback</th></tr></thead><tbody>${rows.map(p => `
+        <tr class="${topSet.has(p.id) ? 'top5' : ''}">
+          <td><strong>${esc(p.givenName)} ${esc(p.familyName)}</strong><br><span class="muted small">${esc(p.gender)}</span></td>
+          <td>${esc(p.email)}</td>
+          <td>${esc(p.institute)}</td>
+          <td>${p.yearsPostGraduation}</td>
+          <td>${esc(p.subspeciality)}</td>
+          <td>${p.submittedAt ? badge('Submitted', 'ok') : badge('In progress', 'pending')} ${p.lateSeconds > 0 ? badge('Late', 'warn') : ''}<br><span class="small muted">${dateText(p.submittedAt || p.startedAt)}</span></td>
+          <td>${p.score === null ? '' : `${p.score}/${p.total} (${pct(p.percent)})`}</td>
+          <td>${p.deviation === null ? '' : fmt(p.deviation, 1)}</td>
+          <td>${p.feedbackSentAt ? dateText(p.feedbackSentAt) : ''}</td>
+        </tr>
+      `).join('')}</tbody></table>`;
+    }
+
+    function renderQuestionStats(rows) {
+      document.getElementById('questionStats').innerHTML = `<table><thead><tr><th>Q</th><th>Correct</th><th>Correct rate</th><th>Option selections</th><th>Prompt</th></tr></thead><tbody>${rows.map(q => {
+        const opts = ['a','b','c','d','e'].map(k => `${k}:${q.optionCounts[k] || 0}`).join(' · ');
+        return `<tr><td>Q${q.id}</td><td>${q.correct.join(', ')}</td><td><strong>${pct(q.correctRate)}</strong><br><span class="muted small">${q.correctCount}/${q.submissions}</span></td><td>${opts}</td><td>${esc(q.prompt)}</td></tr>`;
+      }).join('')}</tbody></table>`;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      show(loginMessage, '');
+      const password = document.getElementById('password').value;
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await response.json();
+      if (!response.ok) { show(loginMessage, data.error || 'Login failed.'); return; }
+      await loadSummary();
+    });
+
+    document.getElementById('refreshButton').addEventListener('click', () => loadSummary().catch(e => show(message, e.message)));
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      location.reload();
+    });
+    document.getElementById('sendFeedbackButton').addEventListener('click', async () => {
+      if (!smtpEnabled) { show(message, 'SMTP is not configured.', 'error'); return; }
+      if (!confirm('Send missed-question feedback emails to all submitted participants who have not already received them?')) return;
+      show(message, 'Sending emails...', 'notice');
+      const response = await fetch('/api/admin/send-feedback', { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok) { show(message, data.error || 'Email sending failed.'); return; }
+      const failureText = data.failures && data.failures.length ? ` Failures: ${data.failures.map(f => `${f.email}: ${f.error}`).join('; ')}` : '';
+      show(message, `Sent ${data.sent} email(s).${failureText}`, data.failures && data.failures.length ? 'error' : 'notice');
+      await loadSummary();
+    });
+
+    loadSummary().catch(error => show(message, error.message));
+  </script>
+</body>
+</html>

@@ -1,0 +1,1349 @@
+[
+  {
+    "id": 1,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "On a lateral carotid angiogram the posterior cerebral artery fills predominantly from the ICA via a large PCOM with no visible P1 segment from the basilar. Which TWO statements best describe the neurointerventional implications of this configuration?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "P1 absence confirms basilar artery occlusion."
+      },
+      {
+        "key": "b",
+        "text": "This is a fetal PCA configuration, occurring in ~20–25% of individuals."
+      },
+      {
+        "key": "c",
+        "text": "Basilar artery interventions may spare the occipital lobe in this patient."
+      },
+      {
+        "key": "d",
+        "text": "The PCOM must be preserved in any ICA occlusion or flow-diverter strategy."
+      },
+      {
+        "key": "e",
+        "text": "The fetal PCA configuration is always bilateral and is never seen on one side only."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "A fetal-type PCA—present in ~20–25% of individuals—is defined by a dominant PCOM supplying the PCA territory with a hypoplastic or absent P1. Because the occipital lobe is supplied from the carotid side, basilar artery interventions may spare the occipital cortex in this patient (c). Conversely, ICA-side interventions (flow diverter, balloon test occlusion, parent vessel sacrifice) must preserve the PCOM to protect the dependent PCA territory (d). The fetal PCA configuration is a normal variant, not evidence of basilar occlusion. A unilateral fetal PCA is common; bilateral occurrence is less frequent but recognised.\n\n**Source:** Neuroangio.org, 'Posterior Cerebral Artery' – fetal PCA, PCOM dominance, and DSA appearance. https://neuroangio.org/anatomy-and-variants/posterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Posterior Cerebral Artery' – fetal PCA, PCOM dominance, and DSA appearance. https://neuroangio.org/anatomy-and-variants/posterior-cerebral-artery/"
+  },
+  {
+    "id": 2,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "The middle cerebral artery is described as phylogenetically the youngest of all cerebral vessels. Which ONE statement best explains its embryological origin?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Direct ICA branch from the very first appearance of cerebral vessels."
+      },
+      {
+        "key": "b",
+        "text": "Develops de novo from mesodermal angioblasts in the Sylvian fissure."
+      },
+      {
+        "key": "c",
+        "text": "Originally a posterior cerebral artery branch captured by the expanding neocortex."
+      },
+      {
+        "key": "d",
+        "text": "Arose as a hypertrophied lenticulostriate vessel from the anterior cerebral artery as the neocortex expanded."
+      },
+      {
+        "key": "e",
+        "text": "Derived from the primitive olfactory artery when the olfactory lobe regressed and its territory was redistributed."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "Following Lasjaunias's phylogenetic framework (detailed on neuroangio.org), the MCA emerged from a hypertrophied lenticulostriate perforator of the ACA as the neocortex expanded. This explains why accessory MCAs occasionally arise from the A1 or ACOM region and why the MCA shows extreme branching variability—it has no single fixed ancestral template.\n\n**Source:** Neuroangio.org, 'Middle Cerebral Artery' – phylogenetic origin, lenticulostriate spectrum, and accessory MCA variants. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/",
+    "source": "Neuroangio.org, 'Middle Cerebral Artery' – phylogenetic origin, lenticulostriate spectrum, and accessory MCA variants. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/"
+  },
+  {
+    "id": 3,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "A persistent primitive trigeminal artery (PTA) is identified on DSA arising from the cavernous ICA. Which TWO statements are most accurate regarding its anatomy and clinical significance?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "PTA is the rarest carotid-basilar anastomosis."
+      },
+      {
+        "key": "b",
+        "text": "PTA connects the cavernous ICA to the basilar between the SCA and AICA origins."
+      },
+      {
+        "key": "c",
+        "text": "Basilar artery rostral to the PTA is perfused from the carotid side in most cases."
+      },
+      {
+        "key": "d",
+        "text": "PTA always terminates in the basilar trunk and never ends in a cerebellar artery."
+      },
+      {
+        "key": "e",
+        "text": "The posterior communicating arteries are typically enlarged when a PTA is present."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The PTA is the most common persistent carotid-basilar anastomosis (~0.1–0.6% of angiograms). It arises from the cavernous ICA and joins the basilar artery between the SCA and AICA origins. Rostral to this insertion the basilar (and therefore SCA/PCA) receives carotid blood; the PCOM arteries are consequently hypoplastic. Variant PTAs may terminate in a cerebellar artery rather than the trunk itself.\n\n**Source:** Neuroangio.org, 'Vascular Neuroembryology' and PTA reference: https://www.neuroangio.org/wp-content/uploads/Trigeminal/PTA-SCA_AICA-IIIa/2016JKSR_jksr-83-184.pdf",
+    "source": "Neuroangio.org, 'Vascular Neuroembryology' and PTA reference: https://www.neuroangio.org/wp-content/uploads/Trigeminal/PTA-SCA_AICA-IIIa/2016JKSR_jksr-83-184.pdf"
+  },
+  {
+    "id": 4,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "The azygous anterior cerebral artery is identified on DSA. Which TWO statements best describe its clinical relevance?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Prevalence is approximately 10%."
+      },
+      {
+        "key": "b",
+        "text": "Associated with unilateral lower extremity weakness when occluded."
+      },
+      {
+        "key": "c",
+        "text": "It is strongly predisposed to terminal (pericallosal) aneurysm formation."
+      },
+      {
+        "key": "d",
+        "text": "Occlusion produces unilateral leg weakness and mimics a cortical ACA infarct."
+      },
+      {
+        "key": "e",
+        "text": "It results in no anterior communicating artery complex; the single A2 supplies both hemispheres."
+      }
+    ],
+    "correct": [
+      "c",
+      "e"
+    ],
+    "explanation": "The azygous ACA (prevalence ~0.1–1%) is a single unpaired A2 supplying both hemispheres with no ACOM complex. It carries a high predisposition to terminal pericallosal aneurysm formation because the entire bilateral anterior cerebral territory is delivered through one haemodynamically stressed trunk. Occlusion causes bilateral lower extremity weakness, not unilateral.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – azygous variant, aneurysm association, and clinical implications. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – azygous variant, aneurysm association, and clinical implications. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/"
+  },
+  {
+    "id": 5,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "During embryogenesis the ACA functioned as the rostral terminal segment of the ICA. Which ONE structure did it primarily supply in early phylogenetic development?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "The occipital lobe."
+      },
+      {
+        "key": "b",
+        "text": "Temporal lobe and insula."
+      },
+      {
+        "key": "c",
+        "text": "Posterior fossa and brainstem."
+      },
+      {
+        "key": "d",
+        "text": "The olfactory lobe and basal ganglia precursors."
+      },
+      {
+        "key": "e",
+        "text": "The entire telencephalon including neocortex before the MCA and PCA had developed."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "As described on neuroangio.org following Lasjaunias's framework, the ACA is among the oldest cerebral vessels. In early phylogeny it served as the rostral ICA terminus, primarily supplying the olfactory lobe and basal ganglia precursors. This developmental history explains the infraoptic A1 variant, the recurrent artery of Heubner's territory, and the occasional ACA origin of accessory MCAs.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – phylogenetic context and variant origins. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – phylogenetic context and variant origins. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/"
+  },
+  {
+    "id": 6,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "The persistent hypoglossal artery is the second most common carotid-basilar anastomosis. Which TWO statements correctly describe its anatomy and angiographic presentation?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "It arises from the ECA and enters the cranium via the jugular foramen."
+      },
+      {
+        "key": "b",
+        "text": "Ipsilateral and often contralateral vertebral arteries are typically hypoplastic."
+      },
+      {
+        "key": "c",
+        "text": "It arises from the cervical ICA and traverses the hypoglossal canal."
+      },
+      {
+        "key": "d",
+        "text": "The basilar artery shows vertebral-type haemodynamics when this vessel is present."
+      },
+      {
+        "key": "e",
+        "text": "It is reliably distinguished from the vertebral artery by its absence of intradural perforators."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The persistent hypoglossal artery arises from the cervical ICA at C1–C2 level and traverses the hypoglossal (anterior condylar) canal to join the basilar artery. When present the ipsilateral—and often contralateral—vertebral arteries are hypoplastic, so the posterior fossa is effectively supplied by the carotid system. The basilar artery distal to the anastomosis exhibits carotid-type pulsatility.\n\n**Source:** Neuroangio.org, 'Vascular Neuroembryology' – persistent carotid-basilar anastomoses and hypoglossal artery anatomy.",
+    "source": "Neuroangio.org, 'Vascular Neuroembryology' – persistent carotid-basilar anastomoses and hypoglossal artery anatomy."
+  },
+  {
+    "id": 7,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "Which ONE statement most accurately describes the embryological basis for dural venous sinus formation?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Sinuses develop from neural crest cells exclusively."
+      },
+      {
+        "key": "b",
+        "text": "Sinuses arise as direct extensions of the primitive cardiac venous system."
+      },
+      {
+        "key": "c",
+        "text": "Sinuses form through canalization of solid mesodermal cords analogous to peripheral veins."
+      },
+      {
+        "key": "d",
+        "text": "Sinuses develop from mesodermal vascular plexuses surrounding the neural tube, progressively remodelling and coalescing."
+      },
+      {
+        "key": "e",
+        "text": "Sinuses form by secondary arterialization of primitive dural channels that later lose their muscular coats and become venous."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "The dural venous sinuses develop from mesodermal vascular plexuses encircling the neural tube. An initial complex anastomotic network—the primitive head sinus and tentorial sinus system—progressively remodels, regresses, and coalesces into definitive sinuses (SSS, transverse, sigmoid, straight, cavernous). This process explains the high prevalence of anatomical variations: persistent embryonic channels, hypoplastic or absent sinuses, and asymmetric dominant drainage.\n\n**Source:** Neuroangio.org, 'Venous Brain Anatomy' and 'Cerebral Venous Embryology'. https://neuroangio.org/venous-brain-anatomy/",
+    "source": "Neuroangio.org, 'Venous Brain Anatomy' and 'Cerebral Venous Embryology'. https://neuroangio.org/venous-brain-anatomy/"
+  },
+  {
+    "id": 8,
+    "section": "Section I: Vascular Neuroembryology and Development",
+    "prompt": "Basilar artery fenestrations are identified on DSA. Which TWO statements are most accurate regarding their developmental basis and clinical significance?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "They are acquired lesions caused by atherosclerotic dissection."
+      },
+      {
+        "key": "b",
+        "text": "They most commonly occur in the proximal basilar artery."
+      },
+      {
+        "key": "c",
+        "text": "They carry a modestly increased risk of saccular aneurysm at the fenestration apex."
+      },
+      {
+        "key": "d",
+        "text": "They represent traumatic injury causing incomplete vascular healing of the posterior fossa."
+      },
+      {
+        "key": "e",
+        "text": "They are pathognomonic of a posterior circulation developmental venous anomaly."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "Basilar fenestrations represent incomplete fusion of the paired primitive longitudinal neural arteries—the plexiform precursor of the basilar artery. They most often occur in the proximal basilar, and their apices (the distal reunification point) are sites of increased haemodynamic stress that predispose to saccular aneurysm formation, analogous to other bifurcation sites.\n\n**Source:** Neuroangio.org, 'Vascular Neuroembryology' and 'Vertebral Artery' – basilar development and fenestration anatomy.\n\n## Section II: Internal Carotid Artery",
+    "source": "Neuroangio.org, 'Vascular Neuroembryology' and 'Vertebral Artery' – basilar development and fenestration anatomy.\n\n## Section II: Internal Carotid Artery"
+  },
+  {
+    "id": 9,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "According to the modern (NYU/Shapiro) segmental classification of the ICA, which ONE segment is defined as lying between the proximal dural ring (PDR) and the distal dural ring (DDR)?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Ophthalmic segment."
+      },
+      {
+        "key": "b",
+        "text": "Cavernous segment."
+      },
+      {
+        "key": "c",
+        "text": "Petrous horizontal segment."
+      },
+      {
+        "key": "d",
+        "text": "Transitional (clinoid) segment."
+      },
+      {
+        "key": "e",
+        "text": "Paraophthalmic segment encompassing the ophthalmic, hypophyseal, and PCOM subsections."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "The transitional or clinoid segment lies between the PDR (ICA exit from cavernous sinus) and the DDR (entry into the subarachnoid space). Neither ring is directly visible on DSA. This segment is the location of 'carotid cave' aneurysms—medially projecting intradural lesions just beneath the DDR—which carry rupture risk despite their apparently cavernous position on imaging.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' – segment classification, PDR/DDR, and paraophthalmic concept. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' – segment classification, PDR/DDR, and paraophthalmic concept. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/"
+  },
+  {
+    "id": 10,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "The meningohypophyseal trunk (MHT) is identified during cavernous sinus DSA. Which TWO statements correctly describe its origin and principal branches?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Arises from the petrous ICA and supplies the middle ear."
+      },
+      {
+        "key": "b",
+        "text": "Arises from the cavernous genu (posterior loop) of the ICA."
+      },
+      {
+        "key": "c",
+        "text": "Its tentorial branch (of Bernasconi-Cassinari) is a common feeder in tentorial dAVFs."
+      },
+      {
+        "key": "d",
+        "text": "Its inferior hypophyseal branch supplies the anterior pituitary (adenohypophysis)."
+      },
+      {
+        "key": "e",
+        "text": "Its dorsal meningeal branch supplies the cavernous sinus floor and cranial nerves III and VI."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The MHT arises from the posterior genu of the cavernous ICA and has three main branches: the tentorial artery (of Bernasconi-Cassinari), the dorsal meningeal artery (dorsum sella / posterior cavernous dura), and the inferior hypophyseal artery (posterior pituitary / neurohypophysis, not the adenohypophysis). The tentorial branch is a consistent and important feeder in tentorial and posterior fossa dural AVFs and meningiomas.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' – MHT anatomy and branches. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' – MHT anatomy and branches. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/"
+  },
+  {
+    "id": 11,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "The inferolateral trunk (ILT) of the cavernous ICA is identified on DSA. Which TWO statements are correct regarding its significance during skull-base endovascular procedures?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The ILT supplies the posterior pituitary exclusively."
+      },
+      {
+        "key": "b",
+        "text": "The ILT supplies the cavernous cranial nerves (CN III, IV, V1, VI) and middle cranial fossa floor."
+      },
+      {
+        "key": "c",
+        "text": "A dorsal ophthalmic artery arising from the ILT creates a dangerous anastomosis during ECA embolization."
+      },
+      {
+        "key": "d",
+        "text": "The ILT has no anastomosis with external carotid territory and can be safely embolized without risk."
+      },
+      {
+        "key": "e",
+        "text": "The ILT anastomoses with the middle meningeal and accessory meningeal arteries via foramina ovale and spinosum."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The ILT arises from the horizontal cavernous ICA and supplies the cavernous sinus walls, cranial nerves III/IV/V1/VI, and middle cranial fossa floor. It anastomoses with the MMA and accessory meningeal arteries. A dorsal ophthalmic artery—an ILT anteromedial branch variant reaching the orbit via the superior orbital fissure—creates a critical ECA-to-retinal anastomosis that must be excluded before any ECA territory embolization.\n\n**Source:** Neuroangio.org, 'Inferolateral Trunk' and 'Ophthalmic Artery' – ILT-ophthalmic anastomosis spectrum. https://neuroangio.org/anatomy-and-variants/inferolateral-trunk/",
+    "source": "Neuroangio.org, 'Inferolateral Trunk' and 'Ophthalmic Artery' – ILT-ophthalmic anastomosis spectrum. https://neuroangio.org/anatomy-and-variants/inferolateral-trunk/"
+  },
+  {
+    "id": 12,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "A 'carotid cave' aneurysm is identified as the source of subarachnoid haemorrhage. Which ONE statement best characterises this lesion?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Intracavernous; low rupture risk; conservative management appropriate."
+      },
+      {
+        "key": "b",
+        "text": "Fusiform petrous ICA aneurysm; typically post-traumatic."
+      },
+      {
+        "key": "c",
+        "text": "Medially projecting saccular aneurysm below the DDR; truly intradural; carries rupture risk."
+      },
+      {
+        "key": "d",
+        "text": "Broad-based cavernous ICA aneurysm presenting with cranial nerve palsy rather than SAH."
+      },
+      {
+        "key": "e",
+        "text": "ICA terminus aneurysm projecting superiorly at the MCA–ACA bifurcation; managed with coiling or clipping."
+      }
+    ],
+    "correct": [
+      "c"
+    ],
+    "explanation": "The carotid cave aneurysm arises from the medial wall of the ICA in a subarachnoid recess just beneath the DDR. Despite appearing transitional or cavernous on imaging, it is truly intradural and therefore carries rupture risk, unlike genuine cavernous aneurysms. They project medially toward the sella, may be subtle on standard DSA, and are increasingly treated with flow diversion.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' – transitional/clinoid segment and carotid cave aneurysm. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' – transitional/clinoid segment and carotid cave aneurysm. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/"
+  },
+  {
+    "id": 13,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "An aberrant internal carotid artery is discovered as a pulsatile retrotympanic mass. Which TWO statements correctly describe its embryological basis and angiographic features?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "It represents duplication of the petrous ICA."
+      },
+      {
+        "key": "b",
+        "text": "Surgical biopsy is safe if the lesion appears glandular."
+      },
+      {
+        "key": "c",
+        "text": "It results from failure of normal cervical ICA development with reconstitution via inferior tympanic and caroticotympanic branches."
+      },
+      {
+        "key": "d",
+        "text": "On DSA the vessel makes a characteristic oblique course through the mesotympanum before reconstituting the petrous ICA."
+      },
+      {
+        "key": "e",
+        "text": "CT typically shows a normal foramen caroticum with an additional ectopic vascular canal adjacent to the cochlea."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "The aberrant ICA arises when cervical ICA development fails; the petrous ICA is then reconstituted via the inferior tympanic branch of the ascending pharyngeal artery connecting to the caroticotympanic branch, creating an aberrant course through the middle ear cavity. Biopsy is catastrophic. CT characteristically shows an absent or small normal foramen caroticum with an aberrant vascular canal entering the mesotympanum.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' and 'Ascending Pharyngeal Artery' – aberrant ICA embryology and DSA features.",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' and 'Ascending Pharyngeal Artery' – aberrant ICA embryology and DSA features."
+  },
+  {
+    "id": 14,
+    "section": "Section II: Internal Carotid Artery",
+    "prompt": "A persistent stapedial artery is suspected. Which ONE radiological finding is pathognomonic?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Enlarged foramen ovale."
+      },
+      {
+        "key": "b",
+        "text": "Enlarged foramen lacerum."
+      },
+      {
+        "key": "c",
+        "text": "Absent or markedly hypoplastic foramen spinosum."
+      },
+      {
+        "key": "d",
+        "text": "A bony canal visible traversing the stapes footplate on high-resolution CT."
+      },
+      {
+        "key": "e",
+        "text": "Calcification within the middle ear overlying the oval window on plain radiography."
+      }
+    ],
+    "correct": [
+      "c"
+    ],
+    "explanation": "When the stapedial artery persists, the MMA fails to develop via its normal route through the foramen spinosum; consequently, the foramen spinosum is absent or markedly hypoplastic—the pathognomonic finding on CT or plain radiography. On DSA, the persistent stapedial artery enters the skull via the tympanic canaliculus and can be visualised as an anomalous vessel on selective ECA injection.\n\n**Source:** Neuroangio.org, 'Persistent Stapedial Artery' – embryology, CT finding, and DSA features.\n\n## Section III: Anterior Circulation",
+    "source": "Neuroangio.org, 'Persistent Stapedial Artery' – embryology, CT finding, and DSA features.\n\n## Section III: Anterior Circulation"
+  },
+  {
+    "id": 15,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "The recurrent artery of Heubner (RAH) is identified on DSA during ACOM aneurysm workup. Which TWO statements are most accurate?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "It always arises from the A1 segment."
+      },
+      {
+        "key": "b",
+        "text": "Occlusion produces contralateral lower-extremity monoparesis."
+      },
+      {
+        "key": "c",
+        "text": "It most commonly arises from the A2 segment near or at the ACOM level."
+      },
+      {
+        "key": "d",
+        "text": "It supplies the medial lenticulostriate territory including the caudate head, anterior putamen, and anterior limb of the internal capsule."
+      },
+      {
+        "key": "e",
+        "text": "There is an inverse haemodynamic relationship: a large RAH correlates with smaller lateral MCA lenticulostriate arteries."
+      }
+    ],
+    "correct": [
+      "c",
+      "e"
+    ],
+    "explanation": "The RAH most commonly arises from the proximal A2 or the ACOM and courses laterally along M1 ('recurrent') to supply the medial lenticulostriate territory. A critical inverse balance exists: a dominant RAH corresponds to smaller lateral MCA lenticulostriate vessels and vice versa. Occlusion produces a medial basal ganglia syndrome (face/arm paresis, dysarthria), not lower-extremity monoparesis which would indicate the ACA cortical territory.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – Heubner artery, territory, and haemodynamic balance. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – Heubner artery, territory, and haemodynamic balance. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/"
+  },
+  {
+    "id": 16,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "During coiling of an ACOM aneurysm, inadvertent occlusion of which ONE small perforating vessel causes the most devastating hypothalamic injury?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "The A1 segment perforators."
+      },
+      {
+        "key": "b",
+        "text": "The frontopolar artery branches."
+      },
+      {
+        "key": "c",
+        "text": "The subcallosal (median callosal) artery."
+      },
+      {
+        "key": "d",
+        "text": "Bilateral recurrent arteries of Heubner."
+      },
+      {
+        "key": "e",
+        "text": "Medial lenticulostriate arteries arising from the proximal A1 segment."
+      }
+    ],
+    "correct": [
+      "c"
+    ],
+    "explanation": "The subcallosal artery (ACOM perforator) supplies the hypothalamus, septal nuclei, anterior commissure, and subcallosal gyrus. Neuroangio.org specifically highlights that 'inadvertent occlusion during aneurysm treatment causes devastating hypothalamic injury'—severe memory impairment, personality change, electrolyte disturbances (DI), and autonomic dysfunction. The poor collateral supply to the hypothalamus makes this injury largely irreversible.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – subcallosal artery and ACOM perforator significance. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – subcallosal artery and ACOM perforator significance. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/"
+  },
+  {
+    "id": 17,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "Regarding lenticulostriate arteries (LSAs) from the MCA M1 segment, which TWO statements best reflect contemporary anatomical understanding?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "LSAs communicate freely with ACA and PCA perforators at the capillary level."
+      },
+      {
+        "key": "b",
+        "text": "LSA number is always 4–6 and does not vary between individuals."
+      },
+      {
+        "key": "c",
+        "text": "Dominant lateral LSA system correlates with a smaller recurrent artery of Heubner."
+      },
+      {
+        "key": "d",
+        "text": "LSAs are functional end arteries; M1 perforator occlusion typically produces deep infarction despite adequate leptomeningeal cortical collaterals."
+      },
+      {
+        "key": "e",
+        "text": "A dominant medial LSA system (large Heubner) is invariably associated with enlarged lateral MCA lenticulostriate vessels on the same side."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "LSAs are effectively end arteries with minimal tissue-level anastomoses; deep infarction usually results from occlusion despite preserved cortical collaterals via leptomeningeal channels. LSA calibre and number follow a Gaussian distribution, not a fixed pattern. The inverse haemodynamic balance means a dominant lateral LSA system correlates with a smaller RAH (Heubner) vessel.\n\n**Source:** Neuroangio.org, 'Middle Cerebral Artery' – lenticulostriate distribution, inverse balance with Heubner, and end-artery behaviour. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/",
+    "source": "Neuroangio.org, 'Middle Cerebral Artery' – lenticulostriate distribution, inverse balance with Heubner, and end-artery behaviour. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/"
+  },
+  {
+    "id": 18,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "An accessory MCA is identified on a pre-treatment DSA of a ruptured ACOM aneurysm. Which TWO statements are most accurate?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "An accessory MCA is always pathological and must be treated."
+      },
+      {
+        "key": "b",
+        "text": "Accessory MCAs may arise from the A1 segment, the ACOM region, or as early anterior temporal branches."
+      },
+      {
+        "key": "c",
+        "text": "Accessory and duplicated MCAs represent a developmental continuum reflecting the MCA's ACA lenticulostriate origin."
+      },
+      {
+        "key": "d",
+        "text": "Thrombectomy or aspiration in M1 is safe when an accessory MCA exists, as it provides redundant cortical supply."
+      },
+      {
+        "key": "e",
+        "text": "MCA fenestrations are pathognomonic of an underlying AVM and always require pre-surgical embolization."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "Accessory and duplicated MCAs represent a developmental spectrum reflecting the phylogenetic origin of the MCA from ACA lenticulostriate vessels. They can arise from A1, ACOM, or as early anterior temporal branches. Neither duplications nor MCA fenestrations are inherently pathological, but they must be recognised before any endovascular procedure (thrombectomy, stenting, flow diversion) to ensure correct catheter navigation and territorial understanding.\n\n**Source:** Neuroangio.org, 'Middle Cerebral Artery' – MCA duplication and fenestration spectrum. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/",
+    "source": "Neuroangio.org, 'Middle Cerebral Artery' – MCA duplication and fenestration spectrum. https://neuroangio.org/anatomy-and-variants/middle-cerebral-artery/"
+  },
+  {
+    "id": 19,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "An anterior choroidal artery (AChA) aneurysm is being differentiated from a PCOM aneurysm on DSA. Which TWO features best support an AChA origin?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Superior projection on lateral view."
+      },
+      {
+        "key": "b",
+        "text": "Origin from the lateral wall of the ICA."
+      },
+      {
+        "key": "c",
+        "text": "Inferomedial projection toward the sella on frontal view."
+      },
+      {
+        "key": "d",
+        "text": "Arising more distally on the ICA than the PCOM origin, projecting inferomedially."
+      },
+      {
+        "key": "e",
+        "text": "Presence of a fetal PCA configuration confirming that the PCOM is the dominant vessel."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "AChA aneurysms arise from the ICA distal to the PCOM origin and project inferomedially toward the sella, whereas PCOM aneurysms arise more proximally and project posterolaterally. Both arise from the posterior-to-lateral ICA wall, so projection is the key discriminating feature. Occlusion of the AChA produces the 'three H' syndrome: contralateral hemiplegia, hemianesthesia, and hemianopia.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' – AChA vs PCOM aneurysm distinction. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' – AChA vs PCOM aneurysm distinction. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/"
+  },
+  {
+    "id": 20,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "The infraoptic course of the A1 segment is identified on pre-surgical DSA. Which ONE statement most accurately describes its embryological basis and surgical significance?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "The A1 passes above the optic chiasm; no surgical hazard."
+      },
+      {
+        "key": "b",
+        "text": "A1 aplasia with collateral supply from the anterior choroidal artery."
+      },
+      {
+        "key": "c",
+        "text": "Persistence of the primitive dorsal ophthalmic artery; no ophthalmic artery aplasia."
+      },
+      {
+        "key": "d",
+        "text": "A normal variant with no impact on surgical approaches to the ACOM or suprasellar region."
+      },
+      {
+        "key": "e",
+        "text": "Persistence of the embryonic ventral ophthalmic artery as the functional A1, passing below the optic nerve; associated with ipsilateral ophthalmic artery aplasia; creates a surgical hazard in ACOM and suprasellar approaches."
+      }
+    ],
+    "correct": [
+      "e"
+    ],
+    "explanation": "The infraoptic A1 represents persistence of the embryonic ventral ophthalmic artery pathway, with the functional ACA coursing below the optic nerve rather than above. Neuroangio.org notes that in one variant form the optic nerve actually passes through a fenestration in the vessel. It is associated with aplasia of the normally positioned ophthalmic artery. Surgeons approaching the ACOM region or suprasellar area may encounter the A1 in an unexpected inferior position, risking inadvertent injury.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – infraoptic ACA variant and embryological basis. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – infraoptic ACA variant and embryological basis. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/"
+  },
+  {
+    "id": 21,
+    "section": "Section III: Anterior Circulation",
+    "prompt": "On DSA planning for PCOM aneurysm coiling, the contralateral A1 appears absent. Which TWO actions are most important before proceeding?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Proceed immediately; absent A1 is a common incidental finding with no significance."
+      },
+      {
+        "key": "b",
+        "text": "Perform contralateral ICA injection to assess cross-filling through the ACOM."
+      },
+      {
+        "key": "c",
+        "text": "Consider cross-compression manoeuvre to demonstrate haemodynamic dependence."
+      },
+      {
+        "key": "d",
+        "text": "Assume the ipsilateral A1 is dominant and proceed with parent vessel sacrifice."
+      },
+      {
+        "key": "e",
+        "text": "Cancel treatment entirely; absent A1 is an absolute contraindication to PCOM aneurysm coiling."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "An apparently absent A1 on ipsilateral injection most likely reflects cross-filling of both A2 segments from the contralateral ICA through a dominant ACOM—not true aplasia. Contralateral ICA injection (with or without cross-compression) is essential to establish ACOM cross-filling, identify the dominant A1, and assess whether the contralateral side supports both hemispheres. Parent vessel sacrifice in this configuration could be catastrophic.\n\n**Source:** Neuroangio.org, 'Anterior Cerebral Artery' – A1 aplasia vs cross-filling and its implications. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/\n\n## Section IV: Posterior Circulation",
+    "source": "Neuroangio.org, 'Anterior Cerebral Artery' – A1 aplasia vs cross-filling and its implications. https://neuroangio.org/anatomy-and-variants/anterior-cerebral-artery/\n\n## Section IV: Posterior Circulation"
+  },
+  {
+    "id": 22,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "Vertebral artery asymmetry is noted on diagnostic DSA. Which TWO statements are most accurate?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The right VA is dominant in the majority of individuals."
+      },
+      {
+        "key": "b",
+        "text": "VA asymmetry per se is not pathological; it represents normal developmental variation."
+      },
+      {
+        "key": "c",
+        "text": "The left VA is dominant (larger) in more than half of normal individuals."
+      },
+      {
+        "key": "d",
+        "text": "A small-calibre foraminal canal reliably predicts an underlying hypoplastic vertebral artery."
+      },
+      {
+        "key": "e",
+        "text": "Asymmetric VAs always reflect unilateral atherosclerosis and require further investigation."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "As emphasised on neuroangio.org, the left VA is dominant in more than half of normal individuals. VA asymmetry is not inherently pathological. A critical caveat: small foraminal canals do not reliably indicate hypoplastic arteries—dissection or other pathology can occur in relatively large foramina. Both VAs should be selectively injected when planning posterior fossa interventions.\n\n**Source:** Neuroangio.org, 'Vertebral Artery' – asymmetry, foraminal entry level, and clinical pitfalls. https://neuroangio.org/anatomy-and-variants/vertebral-artery/",
+    "source": "Neuroangio.org, 'Vertebral Artery' – asymmetry, foraminal entry level, and clinical pitfalls. https://neuroangio.org/anatomy-and-variants/vertebral-artery/"
+  },
+  {
+    "id": 23,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "A vessel is observed entering the neural foramen at C4 rather than C6 on selective cervical DSA. Which ONE diagnosis is most likely?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Traumatic pseudoaneurysm causing apparent level shift."
+      },
+      {
+        "key": "b",
+        "text": "Normal vertebral artery entering at an anomalous C4 level."
+      },
+      {
+        "key": "c",
+        "text": "Deep cervical artery mimicking the vertebral artery."
+      },
+      {
+        "key": "d",
+        "text": "Ascending cervical artery masquerading as the vertebral artery."
+      },
+      {
+        "key": "e",
+        "text": "Hypoplastic vertebral artery with anomalous origin from the common carotid entering at C4."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "When a vessel resembling the VA enters the neural foramen at C4–C5 rather than C6, neuroangio.org specifically lists the ascending cervical artery (branch of the inferior thyroid artery from the thyrocervical trunk) as the most common culprit, 'masquerading as the vertebral artery.' Misidentifying this vessel during cervical interventions or nerve root injections can be catastrophic. Careful angiographic tracing to the vessel's thyrocervical origin is definitive.\n\n**Source:** Neuroangio.org, 'Vertebral Artery' – ascending cervical artery at C4 and dangerous misidentification. https://neuroangio.org/anatomy-and-variants/vertebral-artery/",
+    "source": "Neuroangio.org, 'Vertebral Artery' – ascending cervical artery at C4 and dangerous misidentification. https://neuroangio.org/anatomy-and-variants/vertebral-artery/"
+  },
+  {
+    "id": 24,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "PICA has an extradural origin from the vertebral artery. Which TWO statements best describe the neurointerventional consequences?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Extradural PICA origin is a safe anatomical variant with no procedural implications."
+      },
+      {
+        "key": "b",
+        "text": "An extradural PICA cannot provide the usual perforators to the lateral medulla."
+      },
+      {
+        "key": "c",
+        "text": "PICA and AICA territories are constant and non-overlapping regardless of PICA origin level."
+      },
+      {
+        "key": "d",
+        "text": "Lateral medullary perforators must arise directly from the intradural VA when PICA is extradural."
+      },
+      {
+        "key": "e",
+        "text": "PICA and AICA exist in direct proportional haemodynamic balance; dominant PICA correlates with a correspondingly large AICA."
+      }
+    ],
+    "correct": [
+      "b",
+      "d"
+    ],
+    "explanation": "When PICA has an extradural origin it cannot supply lateral medullary (Wallerian) perforators. These perforators must therefore arise directly from the intradural VA, making that segment particularly eloquent. Neuroangio.org states: 'There are ALWAYS eloquent vessels arising from the intradural vert. ALWAYS.' Note that PICA and AICA territories exist in *inverse* (not direct proportional) balance—a dominant PICA correlates with a smaller AICA and vice versa.\n\n**Source:** Neuroangio.org, 'Vertebral Artery' and 'Posterior Inferior Cerebellar Artery' – extradural origin and eloquent intradural perforators.",
+    "source": "Neuroangio.org, 'Vertebral Artery' and 'Posterior Inferior Cerebellar Artery' – extradural origin and eloquent intradural perforators."
+  },
+  {
+    "id": 25,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "The 'odontoid arcade' is encountered during planning for ascending pharyngeal artery embolization. Which ONE statement most accurately describes this structure and its clinical relevance?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "A bilateral PICA anastomosis at C1 level; relevant only for posterior fossa surgery."
+      },
+      {
+        "key": "b",
+        "text": "A deep cervical artery–VA anastomosis at C3–C4; relevant for brachial plexus ischaemia."
+      },
+      {
+        "key": "c",
+        "text": "An anterior spinal artery anastomosis at C2; primarily risks cervical spinal cord ischaemia."
+      },
+      {
+        "key": "d",
+        "text": "The descending branch of the hypoglossal division of the ascending pharyngeal neuromeningeal trunk anastomosing with the VA at approximately C3, forming an arcade around the odontoid process; embolic material traversing it can cause posterior fossa infarction."
+      },
+      {
+        "key": "e",
+        "text": "A circumferential ring around the C2 vertebra formed by equal contributions from both vertebral arteries, the anterior spinal artery, and the deep cervical artery; can reconstitute C2 in occlusion."
+      }
+    ],
+    "correct": [
+      "d"
+    ],
+    "explanation": "The odontoid arcade is formed by the descending branch of the APA's hypoglossal division anastomosing with the VA at C3. During APA embolization for glomus jugulare, dural AVF, or skull-base tumour, particles or liquid embolic material traversing this arcade can embolize the posterior fossa, causing cerebellar or brainstem infarction. Superselective catheter placement beyond the arcade and provocative lidocaine testing are mandatory safety steps.\n\n**Source:** Neuroangio.org, 'Ascending Pharyngeal Artery' – odontoid arcade anatomy and embolization hazard. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/",
+    "source": "Neuroangio.org, 'Ascending Pharyngeal Artery' – odontoid arcade anatomy and embolization hazard. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/"
+  },
+  {
+    "id": 26,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "A small quadrigeminal plate AVM is seen supplied by a slender vessel close to the P2 segment on DSA. Which TWO statements support identifying it as the collicular (circumcollicular) artery rather than a cortical PCA branch?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "It is typically larger than P2 in calibre."
+      },
+      {
+        "key": "b",
+        "text": "It may be missed on non-superselective vertebral angiography."
+      },
+      {
+        "key": "c",
+        "text": "It is a terminal splenial branch with no perforator-like behaviour."
+      },
+      {
+        "key": "d",
+        "text": "It should be treated as a routine distal temporal PCA branch for embolization."
+      },
+      {
+        "key": "e",
+        "text": "Superselective injection may outline its course around the cerebral peduncle together with adjacent peduncular perforators."
+      }
+    ],
+    "correct": [
+      "b",
+      "e"
+    ],
+    "explanation": "The collicular artery is a slender perforator-like branch arising close to P2 that supplies the quadrigeminal plate. It may be missed on non-selective vertebral angiography. Superselective injection reveals its circumferential course around the cerebral peduncle and, critically, adjacent peduncular perforators—distinguishing it from a cortical temporal or splenial branch and confirming the need for extreme caution before any embolization.\n\n**Source:** Neuroangio.org, 'Posterior Cerebral Artery' – collicular artery and quadrigeminal plate AVM DSA. https://neuroangio.org/anatomy-and-variants/posterior-cerebral-artery/",
+    "source": "Neuroangio.org, 'Posterior Cerebral Artery' – collicular artery and quadrigeminal plate AVM DSA. https://neuroangio.org/anatomy-and-variants/posterior-cerebral-artery/"
+  },
+  {
+    "id": 27,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "The superior cerebellar artery (SCA) has important relationships to cranial nerves. Which TWO statements are most accurate for planning posterior fossa interventions?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "SCA runs between CN III and CN VII around the midbrain."
+      },
+      {
+        "key": "b",
+        "text": "SCA duplication requires treatment when identified because it predisposes to aneurysm."
+      },
+      {
+        "key": "c",
+        "text": "SCA is the most constant of the three paired cerebellar arteries in terms of origin and territory."
+      },
+      {
+        "key": "d",
+        "text": "SCA aneurysms at the basilar–SCA junction may compress CN III or CN IV due to the SCA's course between them."
+      },
+      {
+        "key": "e",
+        "text": "The AICA is the most constant cerebellar artery and is always found at the same level of the basilar artery."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "The SCA is the most anatomically constant of the cerebellar arteries. It arises from the rostral basilar just below the bifurcation and courses between CN III (above) and CN IV (below) around the midbrain. Aneurysms at the basilar-SCA origin can therefore compress either nerve. SCA duplication is an incidental variant and does not independently require treatment.\n\n**Source:** Neuroangio.org, 'Vascular Neuroembryology' and 'Vertebral Artery' – SCA origin, cranial nerve relationships, and constancy.",
+    "source": "Neuroangio.org, 'Vascular Neuroembryology' and 'Vertebral Artery' – SCA origin, cranial nerve relationships, and constancy."
+  },
+  {
+    "id": 28,
+    "section": "Section IV: Posterior Circulation",
+    "prompt": "A posterior communicating artery (PCOM) aneurysm is treated by endovascular coiling. Which TWO statements are most relevant to procedural planning?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "PCOM aneurysms invariably project superiorly and are never associated with CN III palsy."
+      },
+      {
+        "key": "b",
+        "text": "PCOM aneurysms are associated with relatively high recurrence rates after coiling."
+      },
+      {
+        "key": "c",
+        "text": "An infundibular dilatation (≤3 mm, with a branch from the apex) is generally treated as an aneurysm."
+      },
+      {
+        "key": "d",
+        "text": "PCOM aneurysms arise from the posterolateral wall of the ICA and typically project posterolaterally or inferolaterally."
+      },
+      {
+        "key": "e",
+        "text": "In a patient with fetal PCA configuration on the same side, the PCOM must be preserved to avoid posterior circulation infarction."
+      }
+    ],
+    "correct": [
+      "b",
+      "d"
+    ],
+    "explanation": "PCOM aneurysms arise from the posterolateral ICA wall at the PCOM origin, projecting posterolaterally or inferolaterally, and can compress CN III causing oculomotor palsy. They have notably higher coil recurrence rates than some other locations due to wide-neck haemodynamics. An infundibulum (≤3 mm with branch from apex) is a normal variant, not an aneurysm, though rare progression is reported. Neuroangio.org emphasises preservation of fetal PCOM when planning flow diversion or ICA sacrifice.\n\n**Source:** Neuroangio.org, 'Internal Carotid Artery' – PCOM aneurysm characteristics and fetal PCA implications. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/\n\n## Section V: External Carotid Artery and Skull Base",
+    "source": "Neuroangio.org, 'Internal Carotid Artery' – PCOM aneurysm characteristics and fetal PCA implications. https://neuroangio.org/anatomy-and-variants/internal-carotid-artery/\n\n## Section V: External Carotid Artery and Skull Base"
+  },
+  {
+    "id": 29,
+    "section": "Section V: External Carotid Artery and Skull Base",
+    "prompt": "During embolization of a glomus jugulare tumour, the jugular division of the ascending pharyngeal artery is targeted. Which TWO statements best describe the procedural risks?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The jugular division supplies CN II and the optic chiasm."
+      },
+      {
+        "key": "b",
+        "text": "The embolization is 'treacherous' because the jugular division directly supplies CN IX, X, and XI."
+      },
+      {
+        "key": "c",
+        "text": "Provocative testing with lidocaine before particle delivery may help identify cranial nerve supply."
+      },
+      {
+        "key": "d",
+        "text": "Particle embolization of this division is safe because the cranial nerves are supplied by pial vessels only."
+      },
+      {
+        "key": "e",
+        "text": "There is no risk of posterior fossa infarction from this division because it has no connection to the vertebrobasilar system."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "Neuroangio.org explicitly states that jugular division embolization is 'treacherous' due to the direct arterial supply of CN IX, X, and XI, risking dysphagia, hoarseness, and shoulder weakness. Provocative testing (1–2 mL of 1% lidocaine through the microcatheter to reproduce cranial nerve dysfunction before definitive embolization) is a critical safety step. The hypoglossal division similarly risks CN XII.\n\n**Source:** Neuroangio.org, 'Ascending Pharyngeal Artery' – neuromeningeal trunk embolization risks and cranial nerve supply. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/",
+    "source": "Neuroangio.org, 'Ascending Pharyngeal Artery' – neuromeningeal trunk embolization risks and cranial nerve supply. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/"
+  },
+  {
+    "id": 30,
+    "section": "Section V: External Carotid Artery and Skull Base",
+    "prompt": "The MMA and ophthalmic artery are in haemodynamic 'balance.' Which ONE variant describes the MMA providing the complete orbital and ophthalmic arterial supply, including the central retinal artery?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Meningolacrimal variant."
+      },
+      {
+        "key": "b",
+        "text": "Meningo-orbital variant."
+      },
+      {
+        "key": "c",
+        "text": "Complete meningo-ophthalmic variant."
+      },
+      {
+        "key": "d",
+        "text": "Petrosquamosal orbital branch variant."
+      },
+      {
+        "key": "e",
+        "text": "Accessory meningeal-ophthalmic variant with partial ICA contribution."
+      }
+    ],
+    "correct": [
+      "c"
+    ],
+    "explanation": "In the complete meningo-ophthalmic variant (the rarest of the three MMA–ophthalmic balance patterns), the MMA supplies the entire orbital territory—including the central retinal artery—entering the orbit via the superior orbital fissure or the accessory foramen of Hyrtl. ICA occlusion proximal to the ophthalmic origin would not cause blindness in this patient, but MMA embolization for meningioma or chronic SDH could cause irreversible blindness.\n\n**Source:** Neuroangio.org, 'Ophthalmic Artery' – meningo-ophthalmic spectrum and MMA balance variants. https://neuroangio.org/anatomy-and-variants/ophthalmic-artery/",
+    "source": "Neuroangio.org, 'Ophthalmic Artery' – meningo-ophthalmic spectrum and MMA balance variants. https://neuroangio.org/anatomy-and-variants/ophthalmic-artery/"
+  },
+  {
+    "id": 31,
+    "section": "Section V: External Carotid Artery and Skull Base",
+    "prompt": "MMA embolization for a chronic subdural haematoma is being planned. Which TWO steps are essential to prevent catastrophic visual complications?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Administer heparin to prevent retinal artery thrombosis."
+      },
+      {
+        "key": "b",
+        "text": "Inject the MMA selectively and evaluate for ophthalmic artery filling."
+      },
+      {
+        "key": "c",
+        "text": "Confirm absence of meningolacrimal or complete meningo-ophthalmic anastomosis on pre-embolization DSA."
+      },
+      {
+        "key": "d",
+        "text": "Obtain optic nerve ultrasound to confirm retinal perfusion before embolization."
+      },
+      {
+        "key": "e",
+        "text": "Use only large particles (>500 µm) regardless of the anastomotic pattern identified on angiography."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "Central retinal artery occlusion causing irreversible blindness is the most feared complication of MMA embolization. Pre-procedure selective MMA DSA must include evaluation for meningolacrimal, meningo-orbital, or complete meningo-ophthalmic anastomoses. If ophthalmic territory fills via any MMA branch, liquid embolic agents and small particles must not be used; superselective catheterisation distal to the anastomosis with larger particles, or an alternative approach, is required.\n\n**Source:** Neuroangio.org, 'Middle Meningeal Artery' and 'Ophthalmic Artery' – dangerous anastomoses and SDH embolization safety. https://neuroangio.org/anatomy-and-variants/ophthalmic-artery/",
+    "source": "Neuroangio.org, 'Middle Meningeal Artery' and 'Ophthalmic Artery' – dangerous anastomoses and SDH embolization safety. https://neuroangio.org/anatomy-and-variants/ophthalmic-artery/"
+  },
+  {
+    "id": 32,
+    "section": "Section V: External Carotid Artery and Skull Base",
+    "prompt": "On selective DSA a vessel resembling the vertebral artery is seen arising from the external carotid artery territory at the skull base. Which TWO options are plausible explanations?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Normal vertebral artery arising from the ECA, a common normal variant."
+      },
+      {
+        "key": "b",
+        "text": "Ascending pharyngeal artery reconstituting the basilar via the hypoglossal canal."
+      },
+      {
+        "key": "c",
+        "text": "Occipital artery serving as a proatlantal-type C1–C2 carotid–vertebral anastomosis."
+      },
+      {
+        "key": "d",
+        "text": "Deep cervical artery looping to the skull base and mimicking an ECA–vertebral connection."
+      },
+      {
+        "key": "e",
+        "text": "Direct aortic origin of the vertebral artery appearing as an ECA branch on non-selective injection."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "Two plausible anatomical substrates exist: (1) The ascending pharyngeal artery can reconstitute the vertebrobasilar system via the hypoglossal canal when the vertebral artery is developmentally hypoplastic; (2) The occipital artery can function as a proatlantal-type anastomosis (C1 or C2 carotid–vertebral connection) when the proximal VA is hypoplastic. Both must be distinguished from the true VA before any ECA embolization.\n\n**Source:** Neuroangio.org, 'Vertebral Artery' and 'Ascending Pharyngeal Artery' – proatlantal anastomosis and APA reconstitution of the vertebrobasilar system.",
+    "source": "Neuroangio.org, 'Vertebral Artery' and 'Ascending Pharyngeal Artery' – proatlantal anastomosis and APA reconstitution of the vertebrobasilar system."
+  },
+  {
+    "id": 33,
+    "section": "Section V: External Carotid Artery and Skull Base",
+    "prompt": "During embolization of a skull-base meningioma supplied by the ascending pharyngeal artery, two divisions are identified: the hypoglossal and jugular divisions of the neuromeningeal trunk. Which TWO statements are most accurate?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The hypoglossal division supplies CN II and CN III and has no skull-base anastomoses."
+      },
+      {
+        "key": "b",
+        "text": "The hypoglossal division enters the hypoglossal canal and supplies CN XII and adjacent dura."
+      },
+      {
+        "key": "c",
+        "text": "The jugular division enters the jugular foramen and supplies CN IX, X, XI and the adjacent dura."
+      },
+      {
+        "key": "d",
+        "text": "Both divisions can be safely embolised with particles without cranial nerve testing."
+      },
+      {
+        "key": "e",
+        "text": "Anastomosis with the MHT via the clivus makes embolization from either division safe without fluoroscopy."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The neuromeningeal trunk divides into the hypoglossal division (hypoglossal canal → CN XII supply, dura, and anastomosis with contralateral side around the odontoid) and the jugular division (jugular foramen → CN IX/X/XI supply and adjacent dura). Both carry high cranial nerve injury risk during embolization. Superselective placement, small test-dose contrast injection, and lidocaine provocative testing before particle delivery are mandatory.\n\n**Source:** Neuroangio.org, 'Ascending Pharyngeal Artery' – neuromeningeal trunk divisions and cranial nerve supply. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/\n\n## Section VI: Cerebral Venous Anatomy",
+    "source": "Neuroangio.org, 'Ascending Pharyngeal Artery' – neuromeningeal trunk divisions and cranial nerve supply. https://neuroangio.org/anatomy-and-variants/ascending-pharyngeal-artery/\n\n## Section VI: Cerebral Venous Anatomy"
+  },
+  {
+    "id": 34,
+    "section": "Section VI: Cerebral Venous Anatomy",
+    "prompt": "On late-phase DSA the straight sinus (sinus rectus) is formed by the junction of which ONE combination of structures?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "Basal vein of Rosenthal and the internal cerebral vein directly."
+      },
+      {
+        "key": "b",
+        "text": "Inferior sagittal sinus and the basal vein of Rosenthal."
+      },
+      {
+        "key": "c",
+        "text": "Superior sagittal sinus and the bilateral internal cerebral veins."
+      },
+      {
+        "key": "d",
+        "text": "Lateral mesencephalic vein and the inferior sagittal sinus."
+      },
+      {
+        "key": "e",
+        "text": "Inferior sagittal sinus and the great cerebral vein of Galen (which itself receives bilateral internal cerebral veins and basal veins of Rosenthal)."
+      }
+    ],
+    "correct": [
+      "e"
+    ],
+    "explanation": "The straight sinus forms at the junction of the inferior sagittal sinus and the vein of Galen. The vein of Galen is itself formed by confluence of the bilateral internal cerebral veins and the basal veins of Rosenthal at the quadrigeminal cistern. The straight sinus drains posteriorly into the torcular Herophili. This anatomy is critical for planning treatment of vein of Galen malformations, deep AVMs, and deep cerebral venous thrombosis.\n\n**Source:** Neuroangio.org, 'Deep Venous System' and 'Venous Brain Anatomy'. https://neuroangio.org/venous-brain-anatomy/",
+    "source": "Neuroangio.org, 'Deep Venous System' and 'Venous Brain Anatomy'. https://neuroangio.org/venous-brain-anatomy/"
+  },
+  {
+    "id": 35,
+    "section": "Section VI: Cerebral Venous Anatomy",
+    "prompt": "The basal vein of Rosenthal (BVR) is described on neuroangio.org as a 'surface vein on the inferior aspect of the brain.' Which TWO statements are most accurate?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The BVR drains the posterior corpus callosum exclusively."
+      },
+      {
+        "key": "b",
+        "text": "The BVR receives the anterior cerebral vein, deep middle cerebral vein, inferior striate veins, and uncal vein."
+      },
+      {
+        "key": "c",
+        "text": "The BVR courses through the ambient cistern around the midbrain and drains into the vein of Galen."
+      },
+      {
+        "key": "d",
+        "text": "The BVR is visible only on vertebral artery injection, never on carotid injection."
+      },
+      {
+        "key": "e",
+        "text": "Occlusion of the BVR produces a superficial cortical venous infarct confined to the temporal lobe."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The BVR receives multiple tributaries (anterior cerebral vein, deep middle cerebral vein draining the insula/basal ganglia, inferior striate veins, uncal vein, and lateral mesencephalic vein). It courses through the ambient cistern around the midbrain and drains into the vein of Galen. It is visible on both carotid and vertebral injections depending on territory, and occlusion produces deep hemispheric venous infarction (basal ganglia, insula, mesial temporal), not a superficial cortical infarct.\n\n**Source:** Neuroangio.org, 'Basal Vein of Rosenthal' – tributaries, course, and clinical significance. https://neuroangio.org/venous-brain-anatomy/basal-vein-of-rosenthal/",
+    "source": "Neuroangio.org, 'Basal Vein of Rosenthal' – tributaries, course, and clinical significance. https://neuroangio.org/venous-brain-anatomy/basal-vein-of-rosenthal/"
+  },
+  {
+    "id": 36,
+    "section": "Section VI: Cerebral Venous Anatomy",
+    "prompt": "Regarding developmental venous anomalies (DVAs), which TWO statements are most critical for neurointerventional decision-making?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "DVAs should be embolised to eliminate future haemorrhage risk."
+      },
+      {
+        "key": "b",
+        "text": "DVAs represent primitive arterial developmental remnants."
+      },
+      {
+        "key": "c",
+        "text": "DVAs remain visible into very late venous phases on DSA due to prolonged deep white matter capillary transit."
+      },
+      {
+        "key": "d",
+        "text": "DVAs are the sole venous drainage for their territory; sacrifice causes venous infarction."
+      },
+      {
+        "key": "e",
+        "text": "DVAs can be safely included in a resection margin because they represent non-functional tissue."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "DVAs represent the sole venous drainage for their territory—sacrifice or occlusion inevitably causes venous infarction. They must be preserved at surgery and cannot be safely embolised. On DSA, DVAs characteristically persist into very late venous phases due to prolonged capillary transit in deep white matter. Their association with adjacent cavernous malformations in the same drainage territory (to be sought on MRI) is well-established.\n\n**Source:** Neuroangio.org, 'Deep Venous System' – developmental venous anomaly, sole-drainage role, and late venous phase appearance.",
+    "source": "Neuroangio.org, 'Deep Venous System' – developmental venous anomaly, sole-drainage role, and late venous phase appearance."
+  },
+  {
+    "id": 37,
+    "section": "Section VI: Cerebral Venous Anatomy",
+    "prompt": "Transvenous embolisation of a cavernous sinus dAVF is planned but the ipsilateral inferior petrosal sinus (IPS) appears occluded. Which TWO alternative venous access routes may be used?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "The procedure should be abandoned if the IPS is occluded."
+      },
+      {
+        "key": "b",
+        "text": "The facial vein → angular vein → superior ophthalmic vein route (cutdown or catheterisation)."
+      },
+      {
+        "key": "c",
+        "text": "The pterygoid plexus accessed via the facial vein or direct transfacial puncture."
+      },
+      {
+        "key": "d",
+        "text": "Direct percutaneous carotid puncture is required when all venous routes are occluded."
+      },
+      {
+        "key": "e",
+        "text": "The transorbital superior ophthalmic vein route is contraindicated when the SOV is dilated."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "When the ipsilateral IPS is occluded, the cavernous sinus can be reached via the superior ophthalmic vein (SOV) approach (facial vein cutdown → angular vein → SOV → cavernous sinus) or via the pterygoid plexus (facial vein → deep facial vein → pterygoid plexus, or direct transfacial puncture). Other alternatives include the contralateral IPS via the intercavernous sinuses and the superior petrosal sinus. The dilated SOV is often the preferred route in direct cavernous fistulas.\n\n**Source:** Neuroangio.org, 'Cavernous Sinus' – venous connections and alternative transvenous access routes.",
+    "source": "Neuroangio.org, 'Cavernous Sinus' – venous connections and alternative transvenous access routes."
+  },
+  {
+    "id": 38,
+    "section": "Section VI: Cerebral Venous Anatomy",
+    "prompt": "On a standard ICA injection venogram, which ONE deep venous tributary characteristically remains opacified the latest—even after the dural sinuses have emptied of contrast?",
+    "selectCount": 1,
+    "options": [
+      {
+        "key": "a",
+        "text": "The straight sinus at the torcular."
+      },
+      {
+        "key": "b",
+        "text": "The cortical bridging veins overlying the convexity."
+      },
+      {
+        "key": "c",
+        "text": "The basal vein of Rosenthal in the ambient cistern."
+      },
+      {
+        "key": "d",
+        "text": "The superior sagittal sinus near the torcular Herophili."
+      },
+      {
+        "key": "e",
+        "text": "The caudate vein (a tributary of the internal cerebral vein draining the caudate head), reflecting prolonged capillary transit through deep periventricular white matter."
+      }
+    ],
+    "correct": [
+      "e"
+    ],
+    "explanation": "The caudate vein—a deep tributary draining the head of the caudate nucleus into the internal cerebral vein—characteristically remains opacified extremely late in the venous phase, well after the dural sinuses have emptied. Neuroangio.org specifically notes this phenomenon, attributing it to prolonged transit through the deep periventricular white matter and basal ganglia capillary bed. It is a normal finding that must not be misinterpreted as venous obstruction.\n\n**Source:** Neuroangio.org, 'Deep Venous System' – caudate vein late opacification and its significance. https://neuroangio.org/venous-brain-anatomy/\n\n## Section VII: Spinal Vascular Anatomy and DSA Technique",
+    "source": "Neuroangio.org, 'Deep Venous System' – caudate vein late opacification and its significance. https://neuroangio.org/venous-brain-anatomy/\n\n## Section VII: Spinal Vascular Anatomy and DSA Technique"
+  },
+  {
+    "id": 39,
+    "section": "Section VII: Spinal Vascular Anatomy and DSA Technique",
+    "prompt": "The artery of Adamkiewicz is being identified before thoracolumbar surgery. Which TWO statements best describe its typical characteristics?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Arises from L1–L3 on the right side in ~60% of cases."
+      },
+      {
+        "key": "b",
+        "text": "Has a characteristic 'hairpin' turn as it joins the anterior spinal artery."
+      },
+      {
+        "key": "c",
+        "text": "Arises most commonly from T8–L2 on the left side in approximately 75% of cases."
+      },
+      {
+        "key": "d",
+        "text": "Is always the largest intercostal artery visible at a given thoracic level."
+      },
+      {
+        "key": "e",
+        "text": "Occlusion produces posterior cord syndrome with selective loss of position sense and vibration."
+      }
+    ],
+    "correct": [
+      "b",
+      "c"
+    ],
+    "explanation": "The artery of Adamkiewicz (arteria radicularis magna) arises from segmental arteries at T8–L2, most frequently T9–T12, with a strong left-side predominance (~75%). On spinal DSA it is identified by its pathognomonic 'hairpin' turn joining the anterior spinal artery, ascending before the descending ASA continues caudally. Occlusion causes anterior cord syndrome (bilateral paralysis, loss of pain/temperature sensation) with preserved posterior column function—not posterior cord syndrome.\n\n**Source:** Neuroangio.org, 'Spinal Arterial Anatomy' – Adamkiewicz artery level, laterality, and hairpin DSA sign.",
+    "source": "Neuroangio.org, 'Spinal Arterial Anatomy' – Adamkiewicz artery level, laterality, and hairpin DSA sign."
+  },
+  {
+    "id": 40,
+    "section": "Section VII: Spinal Vascular Anatomy and DSA Technique",
+    "prompt": "On cerebral DSA, which TWO statements best reflect current principles of frame rate selection for optimising diagnostic quality and minimising radiation?",
+    "selectCount": 2,
+    "options": [
+      {
+        "key": "a",
+        "text": "Maximum frame rate (15+ fps) should always be used for all cerebrovascular DSA."
+      },
+      {
+        "key": "b",
+        "text": "Frame rate selection has no effect on radiation dose or spatial resolution."
+      },
+      {
+        "key": "c",
+        "text": "Increasing frame rate increases radiation dose and decreases per-frame spatial resolution."
+      },
+      {
+        "key": "d",
+        "text": "Lower frame rates (2–4 fps) provide superior information per unit of radiation for routine diagnostic DSA."
+      },
+      {
+        "key": "e",
+        "text": "High frame rates (≥6 fps) are appropriate only when rapid flow dynamics need to be characterised, such as in direct CCF or high-flow AVM."
+      }
+    ],
+    "correct": [
+      "c",
+      "d"
+    ],
+    "explanation": "As detailed on neuroangio.org, increasing frame rate raises radiation dose while reducing per-frame resolution (less radiation per frame → lower SNR). For routine diagnostic cerebrovascular angiography, 2–4 fps maximises spatial resolution per unit of radiation—providing more diagnostic information per dose. High frame rates are justified only when temporal resolution is specifically required: direct CCF, high-flow AVM, or precise AV shunt timing.\n\n**Source:** Neuroangio.org, 'The Art of Cerebral Angiography' – frame rate, radiation dose, and resolution trade-offs. https://neuroangio.org/sample-page/neurointerventional-techniques/the-art-of-cerebral-angiography/",
+    "source": "Neuroangio.org, 'The Art of Cerebral Angiography' – frame rate, radiation dose, and resolution trade-offs. https://neuroangio.org/sample-page/neurointerventional-techniques/the-art-of-cerebral-angiography/"
+  }
+]

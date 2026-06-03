@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz · WFITN Anatomy</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img id="avatar" src="https://avatars.githubusercontent.com/u/269770510?v=4" alt="Course avatar">
+    <div>
+      <h1 id="courseName">WFITN Anatomy Quiz</h1>
+      <p id="participantLine">Loading participant...</p>
+    </div>
+    <div id="timer" class="timer">30:00</div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="toolbar">
+        <strong>Progress: <span id="answeredCount">0</span>/40 answered</strong>
+        <button class="secondary" type="button" id="jumpFirstUnanswered">First unanswered</button>
+        <button class="success" type="button" id="submitTop">Submit exam</button>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      <p class="muted small">A question is correct only when your selected answer set exactly matches the correct answer set.</p>
+      <div id="message"></div>
+    </section>
+    <form id="examForm"></form>
+    <section class="panel toolbar">
+      <button class="success" type="button" id="submitBottom">Submit exam</button>
+      <span class="muted">Please submit before the timer reaches zero.</span>
+    </section>
+  </main>
+
+  <script>
+    const token = new URLSearchParams(window.location.search).get('token') || sessionStorage.getItem('wfitn_quiz_token') || '';
+    const form = document.getElementById('examForm');
+    const timerEl = document.getElementById('timer');
+    const message = document.getElementById('message');
+    const answeredCountEl = document.getElementById('answeredCount');
+    const progressBar = document.getElementById('progressBar');
+    let questions = [];
+    let submitted = false;
+    let endTime = null;
+    let interval = null;
+
+    function showMessage(text, type = 'error') {
+      message.innerHTML = text ? `<div class="${type}">${text}</div>` : '';
+    }
+
+    function loadSavedAnswers() {
+      try { return JSON.parse(localStorage.getItem(`wfitn_answers_${token}`) || '{}'); }
+      catch { return {}; }
+    }
+
+    function saveAnswers() {
+      const answers = collectAnswers();
+      localStorage.setItem(`wfitn_answers_${token}`, JSON.stringify(answers));
+    }
+
+    function collectAnswers() {
+      const answers = {};
+      questions.forEach(q => {
+        answers[q.id] = Array.from(document.querySelectorAll(`input[name="q${q.id}"]:checked`)).map(el => el.value);
+      });
+      return answers;
+    }
+
+    function updateProgress() {
+      const answers = collectAnswers();
+      const answered = questions.filter(q => (answers[q.id] || []).length > 0).length;
+      answeredCountEl.textContent = answered;
+      progressBar.style.width = questions.length ? `${(answered / questions.length) * 100}%` : '0%';
+    }
+
+    function renderQuestions(saved) {
+      form.innerHTML = questions.map(q => `
+        <section class="panel question" id="q${q.id}" data-qid="${q.id}">
+          <div class="section">${q.section}</div>
+          <h3>Q${q.id}. ${q.prompt}</h3>
+          <p class="muted">Select ${q.selectCount === 1 ? 'ONE' : 'TWO'}.</p>
+          <div class="options">
+            ${q.options.map(option => {
+              const checked = (saved[q.id] || []).includes(option.key) ? 'checked' : '';
+              return `<label class="option ${checked ? 'selected' : ''}"><input type="checkbox" name="q${q.id}" value="${option.key}" ${checked}> <span><strong>${option.key}.</strong> ${option.text}</span></label>`;
+            }).join('')}
+          </div>
+          <div class="question-footer"><span>Maximum selections: ${q.selectCount}</span><span class="answer-state">Not answered</span></div>
+        </section>
+      `).join('');
+
+      questions.forEach(q => {
+        document.querySelectorAll(`input[name="q${q.id}"]`).forEach(input => {
+          input.addEventListener('change', () => {
+            const checked = Array.from(document.querySelectorAll(`input[name="q${q.id}"]:checked`));
+            if (checked.length > q.selectCount) {
+              input.checked = false;
+              showMessage(`Q${q.id}: Please select at most ${q.selectCount} answer(s).`, 'notice');
+              setTimeout(() => showMessage(''), 1800);
+            }
+            document.querySelectorAll(`#q${q.id} .option`).forEach(label => {
+              const child = label.querySelector('input');
+              label.classList.toggle('selected', child.checked);
+            });
+            const state = document.querySelector(`#q${q.id} .answer-state`);
+            const n = document.querySelectorAll(`input[name="q${q.id}"]:checked`).length;
+            state.textContent = n ? `${n} selected` : 'Not answered';
+            saveAnswers();
+            updateProgress();
+          });
+        });
+        const n = document.querySelectorAll(`input[name="q${q.id}"]:checked`).length;
+        document.querySelector(`#q${q.id} .answer-state`).textContent = n ? `${n} selected` : 'Not answered';
+      });
+      updateProgress();
+    }
+
+    function updateTimer() {
+      const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+      const s = String(remaining % 60).padStart(2, '0');
+      timerEl.textContent = `${m}:${s}`;
+      timerEl.classList.toggle('low', remaining <= 180);
+      if (remaining <= 0 && !submitted) {
+        clearInterval(interval);
+        submitExam(true);
+      }
+    }
+
+    async function submitExam(auto = false) {
+      if (submitted) return;
+      if (!auto) {
+        const unanswered = questions.filter(q => (collectAnswers()[q.id] || []).length === 0).map(q => q.id);
+        const msg = unanswered.length ? `There are ${unanswered.length} unanswered questions. Submit now?` : 'Submit your exam now?';
+        if (!confirm(msg)) return;
+      }
+      submitted = true;
+      document.getElementById('submitTop').disabled = true;
+      document.getElementById('submitBottom').disabled = true;
+      showMessage(auto ? 'Time is up. Submitting your answers...' : 'Submitting your answers...', 'notice');
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, answers: collectAnswers() })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Submission failed.');
+        localStorage.removeItem(`wfitn_answers_${token}`);
+        window.location.href = `/result.html?token=${encodeURIComponent(token)}`;
+      } catch (error) {
+        submitted = false;
+        document.getElementById('submitTop').disabled = false;
+        document.getElementById('submitBottom').disabled = false;
+        showMessage(error.message);
+      }
+    }
+
+    document.getElementById('submitTop').addEventListener('click', () => submitExam(false));
+    document.getElementById('submitBottom').addEventListener('click', () => submitExam(false));
+    document.getElementById('jumpFirstUnanswered').addEventListener('click', () => {
+      const answers = collectAnswers();
+      const first = questions.find(q => (answers[q.id] || []).length === 0);
+      if (first) document.getElementById(`q${first.id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    async function init() {
+      if (!token) {
+        window.location.href = '/';
+        return;
+      }
+      const response = await fetch(`/api/questions?token=${encodeURIComponent(token)}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to load questions.');
+      if (data.submittedAt) {
+        window.location.href = `/result.html?token=${encodeURIComponent(token)}`;
+        return;
+      }
+      questions = data.questions;
+      document.getElementById('courseName').textContent = data.courseName;
+      const me = await fetch(`/api/me?token=${encodeURIComponent(token)}`).then(r => r.json());
+      if (me.avatarUrl) document.getElementById('avatar').src = me.avatarUrl;
+      document.getElementById('participantLine').textContent = `${me.givenName} ${me.familyName} · 40 questions · ${Math.round(data.durationSeconds / 60)} minutes`;
+      const started = new Date(data.startedAt).getTime();
+      endTime = started + data.durationSeconds * 1000;
+      renderQuestions(loadSavedAnswers());
+      updateTimer();
+      interval = setInterval(updateTimer, 500);
+    }
+
+    init().catch(error => {
+      showMessage(error.message);
+    });
+  </script>
+</body>
+</html>

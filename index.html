@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WFITN Anatomy Quiz</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img id="avatar" src="https://avatars.githubusercontent.com/u/269770510?v=4" alt="Course avatar">
+    <div>
+      <h1 id="courseName">WFITN Neurovascular Anatomy Course Zurich 2026</h1>
+      <p>Final neurovascular anatomy quiz · 40 questions · 30 minutes</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Participant registration</h2>
+      <p class="muted">Please register before starting the quiz. Your timer starts immediately after registration.</p>
+      <div id="message"></div>
+      <form id="registerForm" class="grid" autocomplete="on">
+        <div class="grid two">
+          <div>
+            <label for="givenName">Given Name</label>
+            <input id="givenName" name="givenName" required maxlength="100">
+          </div>
+          <div>
+            <label for="familyName">Family Name</label>
+            <input id="familyName" name="familyName" required maxlength="100">
+          </div>
+        </div>
+        <div class="grid two">
+          <div>
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other/prefer not to say">Other / Prefer not to say</option>
+            </select>
+          </div>
+          <div>
+            <label for="email">Email for feedback</label>
+            <input id="email" name="email" type="email" required maxlength="254" placeholder="name@example.com">
+          </div>
+        </div>
+        <div>
+          <label for="institute">Institute's Name</label>
+          <input id="institute" name="institute" required maxlength="200">
+        </div>
+        <div class="grid two">
+          <div>
+            <label for="yearsPostGraduation">Years post graduation</label>
+            <input id="yearsPostGraduation" name="yearsPostGraduation" type="number" min="0" max="80" required>
+          </div>
+          <div>
+            <label for="subspeciality">Subspeciality</label>
+            <input id="subspeciality" name="subspeciality" required maxlength="200" placeholder="e.g. INR, neurosurgery, neuroradiology">
+          </div>
+        </div>
+        <div class="notice">
+          You will answer 40 questions. Each question permits exactly one or two selections as indicated. Please do not close the browser during the exam.
+        </div>
+        <button id="startButton" type="submit">Start quiz</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const message = document.getElementById('message');
+    const startButton = document.getElementById('startButton');
+
+    function showMessage(text, type = 'error') {
+      message.innerHTML = text ? `<div class="${type}">${text}</div>` : '';
+    }
+
+    fetch('/health')
+      .then(r => r.json())
+      .then(data => {
+        if (data.courseName) document.getElementById('courseName').textContent = data.courseName;
+      })
+      .catch(() => {});
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      showMessage('');
+      startButton.disabled = true;
+      startButton.textContent = 'Starting...';
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Registration failed.');
+        sessionStorage.setItem('wfitn_quiz_token', data.token);
+        window.location.href = data.examUrl;
+      } catch (error) {
+        showMessage(error.message);
+        startButton.disabled = false;
+        startButton.textContent = 'Start quiz';
+      }
+    });
+  </script>
+</body>
+</html>
