@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate question bank
+        run: npm run validate
+
+      - name: Smoke-test module resolution and scoring
+        run: |
+          node -e "
+            const { scoreAnswers, publicQuestions } = require('./src/scoring.js');
+            require('./src/config.js');
+            const r = scoreAnswers({ '1': ['c', 'd'], '2': ['d'], '3': ['a'] });
+            if (r.total !== 40) throw new Error('Expected 40 questions, got ' + r.total);
+            if (r.score !== 2) throw new Error('Expected score 2, got ' + r.score);
+            if (publicQuestions().some(q => q.correct !== undefined)) {
+              throw new Error('Answer keys must not be exposed in publicQuestions()');
+            }
+            console.log('Smoke test passed: scoring and answer-key withholding OK');
+          "
