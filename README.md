@@ -66,6 +66,21 @@ npm run dev
 
 The app automatically creates the required PostgreSQL tables on startup.
 
+Validate the question bank (40 questions, 5 options each, 1–2 correct answers) at any time:
+
+```bash
+npm run validate
+```
+
+## Project structure
+
+```text
+src/      Express server, config, PostgreSQL access, scoring, question validator
+public/   Participant and admin web pages (static, served at /)
+data/     questions.json — the 40-question bank used for scoring and feedback
+cerebrovascular_MCQ_select1or2_revised_R3.md   Original source of the questions
+```
+
 ## Scoring rule
 
 A question is correct only when the participant's selected answer set exactly matches the answer key. For example, if the correct answer is `c, d`, selecting only `c`, selecting `c, e`, or selecting `c, d, e` is incorrect.
