@@ -45,6 +45,14 @@ async function initDb() {
     );
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_participants_submitted_at ON participants(submitted_at);`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_responses_question_id ON responses(question_id);`);
 }

@@ -29,6 +29,13 @@
       <p class="muted small" style="margin-top:18px">Rank, mean and 偏差値 update as more participants submit. Below you can review the questions you missed, with the correct answers and explanations.</p>
     </section>
 
+    <section class="panel" id="pendingPanel" style="display:none">
+      <div class="notice">
+        <p style="margin:0 0 8px"><strong>The correct answers and explanations have not been published yet.</strong></p>
+        <p style="margin:0">You answered <strong id="pendingMissed">0</strong> question(s) incorrectly. Once the administrator closes the exam and publishes the answers, the review of your missed questions will appear here automatically. You can keep this page open or reload it later.</p>
+      </div>
+    </section>
+
     <section class="panel" id="reviewPanel" style="display:none">
       <h2>Review of your missed questions (<span id="missedCount">0</span>)</h2>
       <div id="review"></div>
@@ -43,6 +50,38 @@
     const token = new URLSearchParams(window.location.search).get('token') || sessionStorage.getItem('wfitn_quiz_token') || '';
     const fmt = (n, digits = 1) => Number(n).toFixed(digits);
     const esc = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+
+    let pollTimer = null;
+
+    function renderState(data) {
+      const pendingPanel = document.getElementById('pendingPanel');
+      const reviewPanel = document.getElementById('reviewPanel');
+      const perfectPanel = document.getElementById('perfectPanel');
+      pendingPanel.style.display = 'none';
+      reviewPanel.style.display = 'none';
+      perfectPanel.style.display = 'none';
+
+      if (!data.answersRevealed) {
+        // Answers not yet published: show how many were missed and poll until release.
+        if (data.missedCount === 0) { perfectPanel.style.display = ''; }
+        else {
+          document.getElementById('pendingMissed').textContent = data.missedCount;
+          pendingPanel.style.display = '';
+        }
+        if (!pollTimer) pollTimer = setInterval(poll, 15000);
+        return;
+      }
+      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+      renderReview(data.review || []);
+    }
+
+    async function poll() {
+      try {
+        const r = await fetch(`/api/result?token=${encodeURIComponent(token)}`);
+        if (!r.ok) return;
+        renderState(await r.json());
+      } catch (e) { /* keep polling */ }
+    }
 
     function renderReview(review) {
       const reviewPanel = document.getElementById('reviewPanel');
@@ -89,7 +128,7 @@
         el.style.display = 'block';
         el.textContent = `Submission was ${data.participant.lateSeconds} seconds after the nominal time limit.`;
       }
-      renderReview(data.review || []);
+      renderState(data);
     }
     init().catch(error => {
       document.querySelector('main').innerHTML = `<section class="panel"><div class="error">${error.message}</div></section>`;

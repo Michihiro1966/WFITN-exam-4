@@ -32,10 +32,12 @@
       <section class="panel">
         <div class="toolbar">
           <button type="button" id="refreshButton" class="secondary">Refresh</button>
+          <button type="button" id="revealButton" class="success">Publish answers to participants</button>
           <a class="button" href="/api/admin/export.xlsx">Download Excel</a>
           <button type="button" id="sendFeedbackButton" class="warn">Send missed-question feedback emails</button>
           <button type="button" id="logoutButton" class="secondary">Logout</button>
         </div>
+        <div id="revealStatus" class="muted small" style="margin-top:10px"></div>
         <div id="message" style="margin-top:14px"></div>
       </section>
 
@@ -127,6 +129,7 @@
       document.getElementById('mean').textContent = fmt(data.mean, 2);
       document.getElementById('sd').textContent = fmt(data.sd, 2);
       document.getElementById('sendFeedbackButton').disabled = !smtpEnabled || data.submittedCount === 0;
+      renderRevealState(data.answersRevealed);
       if (!smtpEnabled) show(message, 'SMTP is not configured. Excel export works, but feedback emails cannot be sent yet.', 'notice');
       renderTop5(data.top5);
       renderParticipants(data.participants, data.top5.map(p => p.id));
@@ -206,6 +209,39 @@
       const data = await response.json();
       if (!response.ok) { show(loginMessage, data.error || 'Login failed.'); return; }
       await loadSummary();
+    });
+
+    let answersRevealed = false;
+    function renderRevealState(revealed) {
+      answersRevealed = !!revealed;
+      const btn = document.getElementById('revealButton');
+      const status = document.getElementById('revealStatus');
+      if (answersRevealed) {
+        btn.textContent = 'Hide answers from participants';
+        btn.className = 'warn';
+        status.innerHTML = '✅ Answers are <strong>published</strong>: participants now see the correct answers and explanations for their missed questions.';
+      } else {
+        btn.textContent = 'Publish answers to participants';
+        btn.className = 'success';
+        status.innerHTML = '🔒 Answers are <strong>hidden</strong>: participants see their score, rank and 偏差値, but not the correct answers/explanations yet.';
+      }
+    }
+
+    document.getElementById('revealButton').addEventListener('click', async () => {
+      const next = !answersRevealed;
+      const msg = next
+        ? 'Publish the correct answers and explanations to ALL participants now? Anyone on their result page will be able to see them.'
+        : 'Hide the answers from participants again?';
+      if (!confirm(msg)) return;
+      const response = await fetch('/api/admin/reveal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reveal: next })
+      });
+      const data = await response.json();
+      if (!response.ok) { show(message, data.error || 'Could not update.'); return; }
+      renderRevealState(data.answersRevealed);
+      show(message, data.answersRevealed ? 'Answers published to participants.' : 'Answers hidden from participants.', 'notice');
     });
 
     document.getElementById('refreshButton').addEventListener('click', () => loadSummary().catch(e => show(message, e.message)));

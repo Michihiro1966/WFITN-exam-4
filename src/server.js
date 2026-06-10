@@ -76,6 +76,23 @@ async function getParticipant(id) {
   return result.rows[0] || null;
 }
 
+async function getSetting(key, fallback = null) {
+  const result = await query('SELECT value FROM settings WHERE key=$1', [key]);
+  return result.rows[0] ? result.rows[0].value : fallback;
+}
+
+async function setSetting(key, value) {
+  await query(
+    `INSERT INTO settings (key, value, updated_at) VALUES ($1, $2, NOW())
+     ON CONFLICT (key) DO UPDATE SET value=$2, updated_at=NOW()`,
+    [key, String(value)]
+  );
+}
+
+async function answersRevealed() {
+  return (await getSetting('answers_revealed', 'false')) === 'true';
+}
+
 async function getSubmittedScores() {
   const result = await query(
     'SELECT score FROM participants WHERE submitted_at IS NOT NULL AND score IS NOT NULL ORDER BY submitted_at ASC'
@@ -92,28 +109,35 @@ async function getParticipantResult(id) {
   // Standard competition ranking: 1 + number of participants who scored higher.
   const rank = scores.filter(s => s > myScore).length + 1;
 
-  // Build the list of missed questions with the correct answer and explanation.
-  const responseRows = await query(
-    'SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC',
-    [id]
-  );
+  // The missed-question review (correct answers + explanations) is only sent to
+  // participants once the administrator has published the answers, so that early
+  // submitters cannot see the answer key while others are still taking the exam.
+  const revealed = await answersRevealed();
   const review = [];
-  for (const question of questions) {
-    const row = responseRows.rows.find(r => Number(r.question_id) === question.id);
-    const selected = row ? normalizeSelection(row.selected) : [];
-    const isCorrect = row ? row.is_correct : false;
-    if (!isCorrect) {
-      review.push({
-        id: question.id,
-        section: question.section,
-        prompt: question.prompt,
-        options: question.options,
-        selectCount: question.selectCount,
-        selected,
-        correct: normalizeSelection(question.correct),
-        explanation: question.explanation
-      });
+  let missedCount = 0;
+  if (revealed) {
+    const responseRows = await query(
+      'SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC',
+      [id]
+    );
+    for (const question of questions) {
+      const row = responseRows.rows.find(r => Number(r.question_id) === question.id);
+      const selected = row ? normalizeSelection(row.selected) : [];
+      const isCorrect = row ? row.is_correct : false;
+      if (!isCorrect) {
+        review.push({
+          id: question.id,
+          section: question.section,
+          prompt: question.prompt,
+          options: question.options,
+          selectCount: question.selectCount,
+          selected,
+          correct: normalizeSelection(question.correct),
+          explanation: question.explanation
+        });
+      }
     }
+    missedCount = review.length;
   }
 
   return {
@@ -132,6 +156,8 @@ async function getParticipantResult(id) {
     mean: stats.mean,
     sd: stats.sd,
     deviation: deviationValue(myScore, stats.mean, stats.sd),
+    answersRevealed: revealed,
+    missedCount: revealed ? missedCount : (participant.total - participant.score),
     review
   };
 }
@@ -211,7 +237,8 @@ async function buildAdminSummary() {
     participants,
     top5,
     questionStats,
-    smtpEnabled: config.smtp.enabled
+    smtpEnabled: config.smtp.enabled,
+    answersRevealed: await answersRevealed()
   };
 }
 
@@ -245,6 +272,16 @@ app.post('/api/admin/logout', requireAdmin, (req, res) => {
 app.get('/api/admin/summary', requireAdmin, async (req, res, next) => {
   try {
     res.json(await buildAdminSummary());
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/admin/reveal', requireAdmin, async (req, res, next) => {
+  try {
+    const reveal = req.body.reveal === true || String(req.body.reveal).toLowerCase() === 'true';
+    await setSetting('answers_revealed', reveal ? 'true' : 'false');
+    res.json({ ok: true, answersRevealed: reveal });
   } catch (error) {
     next(error);
   }

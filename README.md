@@ -11,8 +11,8 @@ A lightweight Railway-ready web app for the WFITN Neurovascular Anatomy Course f
 - Rules/consent gate before the exam: an explicit warning not to use AI or any external help; the 30-minute timer starts only after the participant agrees
 - 30-minute timer (anchored to the server-side start time) with automatic submission
 - Server-side scoring using exact-match logic
-- Immediate personal result page: score, **rank within the cohort**, cohort mean, 偏差値, plus an on-screen review of every missed question with the correct answer and explanation
-- Admin dashboard: summary, top 5, an on-demand **ranking by score** and **hardest 10 questions (lowest correct rate)**, full question correct rates and option-selection rates
+- Immediate personal result page: score, **rank within the cohort**, cohort mean, 偏差値. The review of missed questions (correct answers + explanations) is shown only after the administrator publishes the answers, so early submitters cannot see the key while others are still taking the exam. Open result pages pick up the published answers automatically.
+- Admin dashboard: summary, top 5, a **"Publish answers" toggle** that releases the missed-question review to participants, an on-demand **ranking by score** and **hardest 10 questions (lowest correct rate)**, full question correct rates and option-selection rates
 - Excel export with scores, question stats, option stats, and per-participant responses
 - Optional admin button to also email each participant the questions they missed plus explanations (requires SMTP)
 
