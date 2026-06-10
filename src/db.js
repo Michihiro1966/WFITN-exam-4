@@ -24,7 +24,7 @@ async function initDb() {
       institute TEXT NOT NULL,
       years_post_graduation INTEGER NOT NULL,
       subspeciality TEXT NOT NULL,
-      started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      started_at TIMESTAMPTZ,
       submitted_at TIMESTAMPTZ,
       score INTEGER,
       total INTEGER,
@@ -42,6 +42,14 @@ async function initDb() {
       is_correct BOOLEAN NOT NULL DEFAULT FALSE,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       PRIMARY KEY (participant_id, question_id)
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `);
 

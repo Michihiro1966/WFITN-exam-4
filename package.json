@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
-    "validate": "node src/validate_questions.js"
+    "validate": "node src/validate_questions.js",
+    "build:questions": "node src/build_questions.js"
   },
   "engines": {
     "node": ">=20"

@@ -76,6 +76,23 @@ async function getParticipant(id) {
   return result.rows[0] || null;
 }
 
+async function getSetting(key, fallback = null) {
+  const result = await query('SELECT value FROM settings WHERE key=$1', [key]);
+  return result.rows[0] ? result.rows[0].value : fallback;
+}
+
+async function setSetting(key, value) {
+  await query(
+    `INSERT INTO settings (key, value, updated_at) VALUES ($1, $2, NOW())
+     ON CONFLICT (key) DO UPDATE SET value=$2, updated_at=NOW()`,
+    [key, String(value)]
+  );
+}
+
+async function answersRevealed() {
+  return (await getSetting('answers_revealed', 'false')) === 'true';
+}
+
 async function getSubmittedScores() {
   const result = await query(
     'SELECT score FROM participants WHERE submitted_at IS NOT NULL AND score IS NOT NULL ORDER BY submitted_at ASC'
@@ -88,6 +105,41 @@ async function getParticipantResult(id) {
   if (!participant || !participant.submitted_at) return null;
   const scores = await getSubmittedScores();
   const stats = cohortStats(scores);
+  const myScore = Number(participant.score);
+  // Standard competition ranking: 1 + number of participants who scored higher.
+  const rank = scores.filter(s => s > myScore).length + 1;
+
+  // The missed-question review (correct answers + explanations) is only sent to
+  // participants once the administrator has published the answers, so that early
+  // submitters cannot see the answer key while others are still taking the exam.
+  const revealed = await answersRevealed();
+  const review = [];
+  let missedCount = 0;
+  if (revealed) {
+    const responseRows = await query(
+      'SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC',
+      [id]
+    );
+    for (const question of questions) {
+      const row = responseRows.rows.find(r => Number(r.question_id) === question.id);
+      const selected = row ? normalizeSelection(row.selected) : [];
+      const isCorrect = row ? row.is_correct : false;
+      if (!isCorrect) {
+        review.push({
+          id: question.id,
+          section: question.section,
+          prompt: question.prompt,
+          options: question.options,
+          selectCount: question.selectCount,
+          selected,
+          correct: normalizeSelection(question.correct),
+          explanation: question.explanation
+        });
+      }
+    }
+    missedCount = review.length;
+  }
+
   return {
     participant: {
       givenName: participant.given_name,
@@ -100,9 +152,13 @@ async function getParticipantResult(id) {
     total: participant.total,
     percent: participant.total ? participant.score / participant.total : 0,
     cohortN: scores.length,
+    rank,
     mean: stats.mean,
     sd: stats.sd,
-    deviation: deviationValue(Number(participant.score), stats.mean, stats.sd)
+    deviation: deviationValue(myScore, stats.mean, stats.sd),
+    answersRevealed: revealed,
+    missedCount: revealed ? missedCount : (participant.total - participant.score),
+    review
   };
 }
 
@@ -181,7 +237,8 @@ async function buildAdminSummary() {
     participants,
     top5,
     questionStats,
-    smtpEnabled: config.smtp.enabled
+    smtpEnabled: config.smtp.enabled,
+    answersRevealed: await answersRevealed()
   };
 }
 
@@ -215,6 +272,16 @@ app.post('/api/admin/logout', requireAdmin, (req, res) => {
 app.get('/api/admin/summary', requireAdmin, async (req, res, next) => {
   try {
     res.json(await buildAdminSummary());
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/admin/reveal', requireAdmin, async (req, res, next) => {
+  try {
+    const reveal = req.body.reveal === true || String(req.body.reveal).toLowerCase() === 'true';
+    await setSetting('answers_revealed', reveal ? 'true' : 'false');
+    res.json({ ok: true, answersRevealed: reveal });
   } catch (error) {
     next(error);
   }
@@ -286,6 +353,26 @@ app.get('/api/me', async (req, res, next) => {
   }
 });
 
+app.post('/api/start', async (req, res, next) => {
+  try {
+    const token = String(req.body.token || '');
+    const participant = await getParticipant(token);
+    if (!participant) return res.status(404).json({ error: 'Participant not found.' });
+    if (participant.submitted_at) {
+      return res.json({ ok: true, alreadySubmitted: true, startedAt: participant.started_at });
+    }
+    // Start the timer when the participant accepts the rules; resume the same
+    // start time on reload so refreshing cannot extend the allotted 30 minutes.
+    if (!participant.started_at) {
+      await query('UPDATE participants SET started_at=NOW() WHERE id=$1 AND started_at IS NULL', [token]);
+    }
+    const updated = await getParticipant(token);
+    res.json({ ok: true, startedAt: updated.started_at, durationSeconds: config.examDurationSeconds });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/questions', async (req, res, next) => {
   try {
     const token = String(req.query.token || '');
@@ -322,7 +409,7 @@ app.post('/api/submit', async (req, res, next) => {
     }
 
     const { score, total, details } = scoreAnswers(answers);
-    const startedAtMs = new Date(participant.started_at).getTime();
+    const startedAtMs = participant.started_at ? new Date(participant.started_at).getTime() : Date.now();
     const nowMs = Date.now();
     const elapsedSeconds = Math.max(0, Math.round((nowMs - startedAtMs) / 1000));
     const lateSeconds = Math.max(0, elapsedSeconds - config.examDurationSeconds);
