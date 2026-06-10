@@ -18,6 +18,9 @@ A lightweight Railway-ready web app for the WFITN Neurovascular Anatomy Course f
 
 ## Railway deployment
 
+> For a printable, checkbox-style setup + course-day runbook (rehearsal, running the exam,
+> publishing answers, awards, troubleshooting), see **[DEPLOY.md](DEPLOY.md)**.
+
 1. Create a new GitHub repository and upload this folder.
 2. In Railway, create a **New Project → Deploy from GitHub repo**.
 3. Add a **PostgreSQL** service to the same Railway project.
@@ -36,6 +39,10 @@ A lightweight Railway-ready web app for the WFITN Neurovascular Anatomy Course f
    ```text
    APP_BASE_URL=https://<your-railway-domain>
    ```
+
+   > **Database SSL:** Using `DATABASE_URL=${{Postgres.DATABASE_URL}}` connects over Railway's
+   > private network, where SSL is not required (the default works as-is). Only if you connect to
+   > Postgres over a **public** proxy URL, also add `PGSSLMODE=require` so the driver negotiates TLS.
 
 6. For feedback emails, set SMTP variables:
 
