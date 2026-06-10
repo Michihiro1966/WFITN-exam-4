@@ -65,6 +65,19 @@
       </section>
 
       <section class="panel">
+        <div class="toolbar">
+          <button type="button" id="showResultsButton">Show aggregated results (ranking + hardest 10)</button>
+          <a class="button secondary" href="/api/admin/export.xlsx">Download Excel</a>
+        </div>
+        <div id="aggregated" style="margin-top:16px; display:none">
+          <h2>Ranking by score</h2>
+          <div id="ranking" class="table-wrap"></div>
+          <h2 style="margin-top:24px">Hardest 10 questions (lowest correct rate)</h2>
+          <div id="worst10" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section class="panel">
         <h2>Participants</h2>
         <div id="participants" class="table-wrap"></div>
       </section>
@@ -84,6 +97,7 @@
     const fmt = (n, digits = 1) => Number(n || 0).toFixed(digits);
     const esc = (value) => String(value ?? '').replace(/[&<>'\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','\"':'&quot;'}[ch]));
     let smtpEnabled = false;
+    let lastSummary = null;
 
     function show(el, text, type = 'error') {
       el.innerHTML = text ? `<div class="${type}">${esc(text)}</div>` : '';
@@ -102,6 +116,7 @@
       }
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to load admin data.');
+      lastSummary = data;
       loginPanel.style.display = 'none';
       dashboard.style.display = '';
       smtpEnabled = data.smtpEnabled;
@@ -116,6 +131,35 @@
       renderTop5(data.top5);
       renderParticipants(data.participants, data.top5.map(p => p.id));
       renderQuestionStats(data.questionStats);
+      if (document.getElementById('aggregated').style.display !== 'none') renderAggregated();
+    }
+
+    function renderAggregated() {
+      if (!lastSummary) return;
+      document.getElementById('aggregated').style.display = '';
+
+      const ranked = lastSummary.participants
+        .filter(p => p.submittedAt && p.score !== null)
+        .sort((a, b) => (b.score - a.score) || (new Date(a.submittedAt) - new Date(b.submittedAt)));
+      const rankEl = document.getElementById('ranking');
+      if (!ranked.length) {
+        rankEl.innerHTML = '<p class="muted">No submissions yet.</p>';
+      } else {
+        rankEl.innerHTML = `<table><thead><tr><th>Rank</th><th>Name</th><th>Institute</th><th>Subspeciality</th><th>Score</th><th>Percent</th><th>偏差値</th></tr></thead><tbody>${ranked.map((p, i) => `
+          <tr class="${i < 5 ? 'top5' : ''}"><td><strong>${i + 1}</strong></td><td>${esc(p.givenName)} ${esc(p.familyName)}</td><td>${esc(p.institute)}</td><td>${esc(p.subspeciality)}</td><td><strong>${p.score}/${p.total}</strong></td><td>${pct(p.percent)}</td><td>${fmt(p.deviation, 1)}</td></tr>
+        `).join('')}</tbody></table>`;
+      }
+
+      const answered = lastSummary.questionStats.filter(q => q.submissions > 0);
+      const worst = [...answered].sort((a, b) => (a.correctRate - b.correctRate) || (a.id - b.id)).slice(0, 10);
+      const worstEl = document.getElementById('worst10');
+      if (!worst.length) {
+        worstEl.innerHTML = '<p class="muted">No submissions yet.</p>';
+      } else {
+        worstEl.innerHTML = `<table><thead><tr><th>#</th><th>Q</th><th>Correct</th><th>Correct rate</th><th>Prompt</th></tr></thead><tbody>${worst.map((q, i) => `
+          <tr><td>${i + 1}</td><td>Q${q.id}</td><td>${q.correct.join(', ')}</td><td><strong>${pct(q.correctRate)}</strong><br><span class="muted small">${q.correctCount}/${q.submissions}</span></td><td>${esc(q.prompt)}</td></tr>
+        `).join('')}</tbody></table>`;
+      }
     }
 
     function renderTop5(rows) {
@@ -165,6 +209,10 @@
     });
 
     document.getElementById('refreshButton').addEventListener('click', () => loadSummary().catch(e => show(message, e.message)));
+    document.getElementById('showResultsButton').addEventListener('click', () => {
+      renderAggregated();
+      document.getElementById('aggregated').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     document.getElementById('logoutButton').addEventListener('click', async () => {
       await fetch('/api/admin/logout', { method: 'POST' });
       location.reload();

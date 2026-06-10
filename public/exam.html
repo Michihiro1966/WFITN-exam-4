@@ -13,25 +13,44 @@
       <h1 id="courseName">WFITN Anatomy Quiz</h1>
       <p id="participantLine">Loading participant...</p>
     </div>
-    <div id="timer" class="timer">30:00</div>
+    <div id="timer" class="timer" style="display:none">30:00</div>
   </header>
 
   <main class="container">
-    <section class="panel">
-      <div class="toolbar">
-        <strong>Progress: <span id="answeredCount">0</span>/40 answered</strong>
-        <button class="secondary" type="button" id="jumpFirstUnanswered">First unanswered</button>
-        <button class="success" type="button" id="submitTop">Submit exam</button>
+    <!-- Consent / rules gate shown before the timer starts -->
+    <section id="consentPanel" class="panel" style="display:none">
+      <h2>Before you start</h2>
+      <div class="notice" style="font-size:16px">
+        <p style="margin:0 0 10px"><strong>⚠️ Please do NOT use any AI tool, search engine, textbook, or outside help during this exam.</strong></p>
+        <p style="margin:0 0 10px">You have only <strong>30 minutes</strong> to answer all 40 questions, so there is no time to consult external resources. Please answer from your own knowledge.</p>
+        <p style="margin:0">Each question requires you to select <strong>ONE or TWO</strong> answers exactly as indicated. A question is scored correct only when your selected set exactly matches the answer key.</p>
       </div>
-      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-      <p class="muted small">A question is correct only when your selected answer set exactly matches the correct answer set.</p>
-      <div id="message"></div>
+      <label class="option" style="margin-top:18px; grid-template-columns:auto 1fr;">
+        <input type="checkbox" id="agreeCheck">
+        <span>I have read the rules above and I agree not to use AI or any other external assistance during this exam.</span>
+      </label>
+      <div id="consentMessage" style="margin-top:14px"></div>
+      <button id="startButton" type="button" disabled style="margin-top:16px">Agree &amp; start the 30-minute exam</button>
     </section>
-    <form id="examForm"></form>
-    <section class="panel toolbar">
-      <button class="success" type="button" id="submitBottom">Submit exam</button>
-      <span class="muted">Please submit before the timer reaches zero.</span>
-    </section>
+
+    <!-- Exam UI, hidden until the participant consents -->
+    <div id="examArea" style="display:none">
+      <section class="panel">
+        <div class="toolbar">
+          <strong>Progress: <span id="answeredCount">0</span>/40 answered</strong>
+          <button class="secondary" type="button" id="jumpFirstUnanswered">First unanswered</button>
+          <button class="success" type="button" id="submitTop">Submit exam</button>
+        </div>
+        <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+        <p class="muted small">A question is correct only when your selected answer set exactly matches the correct answer set.</p>
+        <div id="message"></div>
+      </section>
+      <form id="examForm"></form>
+      <section class="panel toolbar">
+        <button class="success" type="button" id="submitBottom">Submit exam</button>
+        <span class="muted">Please submit before the timer reaches zero.</span>
+      </section>
+    </div>
   </main>
 
   <script>
@@ -41,10 +60,13 @@
     const message = document.getElementById('message');
     const answeredCountEl = document.getElementById('answeredCount');
     const progressBar = document.getElementById('progressBar');
+    const consentPanel = document.getElementById('consentPanel');
+    const examArea = document.getElementById('examArea');
     let questions = [];
     let submitted = false;
     let endTime = null;
     let interval = null;
+    let durationSeconds = 1800;
 
     function showMessage(text, type = 'error') {
       message.innerHTML = text ? `<div class="${type}">${text}</div>` : '';
@@ -166,32 +188,68 @@
       if (first) document.getElementById(`q${first.id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    async function init() {
-      if (!token) {
-        window.location.href = '/';
-        return;
-      }
-      const response = await fetch(`/api/questions?token=${encodeURIComponent(token)}`);
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Failed to load questions.');
-      if (data.submittedAt) {
-        window.location.href = `/result.html?token=${encodeURIComponent(token)}`;
-        return;
-      }
-      questions = data.questions;
-      document.getElementById('courseName').textContent = data.courseName;
-      const me = await fetch(`/api/me?token=${encodeURIComponent(token)}`).then(r => r.json());
-      if (me.avatarUrl) document.getElementById('avatar').src = me.avatarUrl;
-      document.getElementById('participantLine').textContent = `${me.givenName} ${me.familyName} · 40 questions · ${Math.round(data.durationSeconds / 60)} minutes`;
-      const started = new Date(data.startedAt).getTime();
-      endTime = started + data.durationSeconds * 1000;
+    const agreeCheck = document.getElementById('agreeCheck');
+    const startButton = document.getElementById('startButton');
+    agreeCheck.addEventListener('change', () => { startButton.disabled = !agreeCheck.checked; });
+    startButton.addEventListener('click', startExam);
+
+    // Load questions, reveal the exam UI, and run the timer from the server start time.
+    async function beginExamUi(startedAt) {
+      const qResp = await fetch(`/api/questions?token=${encodeURIComponent(token)}`);
+      const qData = await qResp.json();
+      if (!qResp.ok) throw new Error(qData.error || 'Failed to load questions.');
+      questions = qData.questions;
+      durationSeconds = qData.durationSeconds;
+      consentPanel.style.display = 'none';
+      examArea.style.display = '';
+      timerEl.style.display = '';
+      const started = new Date(startedAt).getTime();
+      endTime = started + durationSeconds * 1000;
       renderQuestions(loadSavedAnswers());
       updateTimer();
       interval = setInterval(updateTimer, 500);
     }
 
+    async function startExam() {
+      startButton.disabled = true;
+      startButton.textContent = 'Starting...';
+      try {
+        const resp = await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.error || 'Could not start the exam.');
+        if (data.alreadySubmitted) { window.location.href = `/result.html?token=${encodeURIComponent(token)}`; return; }
+        await beginExamUi(data.startedAt);
+      } catch (error) {
+        startButton.disabled = false;
+        startButton.textContent = 'Agree & start the 30-minute exam';
+        document.getElementById('consentMessage').innerHTML = `<div class="error">${error.message}</div>`;
+      }
+    }
+
+    async function init() {
+      if (!token) { window.location.href = '/'; return; }
+      const me = await fetch(`/api/me?token=${encodeURIComponent(token)}`).then(r => r.json());
+      if (me.error) throw new Error(me.error);
+      if (me.avatarUrl) document.getElementById('avatar').src = me.avatarUrl;
+      if (me.courseName) document.getElementById('courseName').textContent = me.courseName;
+      document.getElementById('participantLine').textContent = `${me.givenName} ${me.familyName} · 40 questions · ${Math.round(me.durationSeconds / 60)} minutes`;
+
+      if (me.submittedAt) { window.location.href = `/result.html?token=${encodeURIComponent(token)}`; return; }
+      if (me.startedAt) {
+        // Already started (e.g. page reload) — resume without showing consent again.
+        await beginExamUi(me.startedAt);
+      } else {
+        consentPanel.style.display = '';
+      }
+    }
+
     init().catch(error => {
-      showMessage(error.message);
+      consentPanel.style.display = '';
+      document.getElementById('consentMessage').innerHTML = `<div class="error">${error.message}</div>`;
     });
   </script>
 </body>

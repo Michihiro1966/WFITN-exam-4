@@ -22,17 +22,56 @@
       <p id="lateMessage" class="error" style="display:none"></p>
       <div class="kpi-row" style="margin-top:20px">
         <div class="kpi"><span class="muted">Percent</span><strong id="percent">--</strong></div>
+        <div class="kpi"><span class="muted">Rank</span><strong id="rank">--</strong></div>
         <div class="kpi"><span class="muted">Cohort mean</span><strong id="mean">--</strong></div>
-        <div class="kpi"><span class="muted">SD</span><strong id="sd">--</strong></div>
         <div class="kpi"><span class="muted">偏差値</span><strong id="deviation">--</strong></div>
       </div>
-      <p class="muted small" style="margin-top:18px">Cohort values update as more participants submit. Explanations for missed questions will be emailed later by the administrator.</p>
+      <p class="muted small" style="margin-top:18px">Rank, mean and 偏差値 update as more participants submit. Below you can review the questions you missed, with the correct answers and explanations.</p>
+    </section>
+
+    <section class="panel" id="reviewPanel" style="display:none">
+      <h2>Review of your missed questions (<span id="missedCount">0</span>)</h2>
+      <div id="review"></div>
+    </section>
+
+    <section class="panel" id="perfectPanel" style="display:none">
+      <div class="notice"><strong>Excellent — you answered every question correctly.</strong></div>
     </section>
   </main>
 
   <script>
     const token = new URLSearchParams(window.location.search).get('token') || sessionStorage.getItem('wfitn_quiz_token') || '';
     const fmt = (n, digits = 1) => Number(n).toFixed(digits);
+    const esc = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+
+    function renderReview(review) {
+      const reviewPanel = document.getElementById('reviewPanel');
+      const perfectPanel = document.getElementById('perfectPanel');
+      document.getElementById('missedCount').textContent = review.length;
+      if (!review.length) { perfectPanel.style.display = ''; return; }
+      reviewPanel.style.display = '';
+      document.getElementById('review').innerHTML = review.map(q => {
+        const correctSet = new Set(q.correct);
+        const selectedSet = new Set(q.selected);
+        const options = q.options.map(o => {
+          const isCorrect = correctSet.has(o.key);
+          const isPicked = selectedSet.has(o.key);
+          const mark = isCorrect ? '✓' : (isPicked ? '✗' : '');
+          const bg = isCorrect ? 'background:#f0fdf4;border-color:#86efac' : (isPicked ? 'background:#fef2f2;border-color:#fecaca' : '');
+          return `<label class="option" style="cursor:default;${bg}"><span style="width:1.4em;font-weight:800">${mark}</span><span><strong>${o.key}.</strong> ${esc(o.text)}</span></label>`;
+        }).join('');
+        const yours = q.selected.length ? q.selected.join(', ') : 'No answer';
+        return `
+          <section class="panel" style="background:#fafafa">
+            <div class="section">${esc(q.section)}</div>
+            <h3>Q${q.id}. ${esc(q.prompt)}</h3>
+            <div class="options">${options}</div>
+            <p class="small" style="margin:12px 0 4px"><strong>Your answer:</strong> ${esc(yours)} &nbsp;·&nbsp; <strong>Correct answer:</strong> ${esc(q.correct.join(', '))}</p>
+            <div class="notice" style="white-space:pre-wrap">${esc(q.explanation)}</div>
+          </section>`;
+      }).join('');
+    }
+
     async function init() {
       if (!token) { window.location.href = '/'; return; }
       const response = await fetch(`/api/result?token=${encodeURIComponent(token)}`);
@@ -42,14 +81,15 @@
       document.getElementById('score').textContent = data.score;
       document.getElementById('total').textContent = data.total;
       document.getElementById('percent').textContent = `${fmt(data.percent * 100, 1)}%`;
+      document.getElementById('rank').textContent = `${data.rank} / ${data.cohortN}`;
       document.getElementById('mean').textContent = fmt(data.mean, 2);
-      document.getElementById('sd').textContent = fmt(data.sd, 2);
       document.getElementById('deviation').textContent = fmt(data.deviation, 1);
       if (data.participant.lateSeconds > 0) {
         const el = document.getElementById('lateMessage');
         el.style.display = 'block';
         el.textContent = `Submission was ${data.participant.lateSeconds} seconds after the nominal time limit.`;
       }
+      renderReview(data.review || []);
     }
     init().catch(error => {
       document.querySelector('main').innerHTML = `<section class="panel"><div class="error">${error.message}</div></section>`;

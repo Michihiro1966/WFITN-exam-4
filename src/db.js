@@ -24,7 +24,7 @@ async function initDb() {
       institute TEXT NOT NULL,
       years_post_graduation INTEGER NOT NULL,
       subspeciality TEXT NOT NULL,
-      started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      started_at TIMESTAMPTZ,
       submitted_at TIMESTAMPTZ,
       score INTEGER,
       total INTEGER,

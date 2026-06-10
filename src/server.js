@@ -88,6 +88,34 @@ async function getParticipantResult(id) {
   if (!participant || !participant.submitted_at) return null;
   const scores = await getSubmittedScores();
   const stats = cohortStats(scores);
+  const myScore = Number(participant.score);
+  // Standard competition ranking: 1 + number of participants who scored higher.
+  const rank = scores.filter(s => s > myScore).length + 1;
+
+  // Build the list of missed questions with the correct answer and explanation.
+  const responseRows = await query(
+    'SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC',
+    [id]
+  );
+  const review = [];
+  for (const question of questions) {
+    const row = responseRows.rows.find(r => Number(r.question_id) === question.id);
+    const selected = row ? normalizeSelection(row.selected) : [];
+    const isCorrect = row ? row.is_correct : false;
+    if (!isCorrect) {
+      review.push({
+        id: question.id,
+        section: question.section,
+        prompt: question.prompt,
+        options: question.options,
+        selectCount: question.selectCount,
+        selected,
+        correct: normalizeSelection(question.correct),
+        explanation: question.explanation
+      });
+    }
+  }
+
   return {
     participant: {
       givenName: participant.given_name,
@@ -100,9 +128,11 @@ async function getParticipantResult(id) {
     total: participant.total,
     percent: participant.total ? participant.score / participant.total : 0,
     cohortN: scores.length,
+    rank,
     mean: stats.mean,
     sd: stats.sd,
-    deviation: deviationValue(Number(participant.score), stats.mean, stats.sd)
+    deviation: deviationValue(myScore, stats.mean, stats.sd),
+    review
   };
 }
 
@@ -286,6 +316,26 @@ app.get('/api/me', async (req, res, next) => {
   }
 });
 
+app.post('/api/start', async (req, res, next) => {
+  try {
+    const token = String(req.body.token || '');
+    const participant = await getParticipant(token);
+    if (!participant) return res.status(404).json({ error: 'Participant not found.' });
+    if (participant.submitted_at) {
+      return res.json({ ok: true, alreadySubmitted: true, startedAt: participant.started_at });
+    }
+    // Start the timer when the participant accepts the rules; resume the same
+    // start time on reload so refreshing cannot extend the allotted 30 minutes.
+    if (!participant.started_at) {
+      await query('UPDATE participants SET started_at=NOW() WHERE id=$1 AND started_at IS NULL', [token]);
+    }
+    const updated = await getParticipant(token);
+    res.json({ ok: true, startedAt: updated.started_at, durationSeconds: config.examDurationSeconds });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/questions', async (req, res, next) => {
   try {
     const token = String(req.query.token || '');
@@ -322,7 +372,7 @@ app.post('/api/submit', async (req, res, next) => {
     }
 
     const { score, total, details } = scoreAnswers(answers);
-    const startedAtMs = new Date(participant.started_at).getTime();
+    const startedAtMs = participant.started_at ? new Date(participant.started_at).getTime() : Date.now();
     const nowMs = Date.now();
     const elapsedSeconds = Math.max(0, Math.round((nowMs - startedAtMs) / 1000));
     const lateSeconds = Math.max(0, elapsedSeconds - config.examDurationSeconds);

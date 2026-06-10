@@ -25,11 +25,15 @@ jobs:
       - name: Smoke-test module resolution and scoring
         run: |
           node -e "
-            const { scoreAnswers, publicQuestions } = require('./src/scoring.js');
+            const { questions, scoreAnswers, publicQuestions } = require('./src/scoring.js');
             require('./src/config.js');
-            const r = scoreAnswers({ '1': ['c', 'd'], '2': ['d'], '3': ['a'] });
+            // A perfect answer set must score full marks regardless of the question bank.
+            const perfect = Object.fromEntries(questions.map(q => [String(q.id), q.correct]));
+            const r = scoreAnswers(perfect);
             if (r.total !== 40) throw new Error('Expected 40 questions, got ' + r.total);
-            if (r.score !== 2) throw new Error('Expected score 2, got ' + r.score);
+            if (r.score !== 40) throw new Error('Expected perfect score 40, got ' + r.score);
+            // An empty answer set must score zero.
+            if (scoreAnswers({}).score !== 0) throw new Error('Empty answers should score 0');
             if (publicQuestions().some(q => q.correct !== undefined)) {
               throw new Error('Answer keys must not be exposed in publicQuestions()');
             }
