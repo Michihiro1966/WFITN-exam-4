@@ -362,7 +362,7 @@ app.post('/api/start', async (req, res, next) => {
       return res.json({ ok: true, alreadySubmitted: true, startedAt: participant.started_at });
     }
     // Start the timer when the participant accepts the rules; resume the same
-    // start time on reload so refreshing cannot extend the allotted 30 minutes.
+    // start time on reload so refreshing cannot extend the allotted exam time.
     if (!participant.started_at) {
       await query('UPDATE participants SET started_at=NOW() WHERE id=$1 AND started_at IS NULL', [token]);
     }

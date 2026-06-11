@@ -22,7 +22,7 @@
       <h2>Before you start</h2>
       <div class="notice" style="font-size:16px">
         <p style="margin:0 0 10px"><strong>⚠️ Please do NOT use any AI tool, search engine, textbook, or outside help during this exam.</strong></p>
-        <p style="margin:0 0 10px">You have only <strong>30 minutes</strong> to answer all 40 questions, so there is no time to consult external resources. Please answer from your own knowledge.</p>
+        <p style="margin:0 0 10px">You have only <strong><span id="consentMinutes">40</span> minutes</strong> to answer all 40 questions, so there is no time to consult external resources. Please answer from your own knowledge.</p>
         <p style="margin:0">Each question requires you to select <strong>ONE or TWO</strong> answers exactly as indicated. A question is scored correct only when your selected set exactly matches the answer key.</p>
       </div>
       <label class="option" style="margin-top:18px; grid-template-columns:auto 1fr;">
@@ -30,7 +30,7 @@
         <span>I have read the rules above and I agree not to use AI or any other external assistance during this exam.</span>
       </label>
       <div id="consentMessage" style="margin-top:14px"></div>
-      <button id="startButton" type="button" disabled style="margin-top:16px">Agree &amp; start the 30-minute exam</button>
+      <button id="startButton" type="button" disabled style="margin-top:16px">Agree &amp; start the exam</button>
     </section>
 
     <!-- Exam UI, hidden until the participant consents -->
@@ -225,7 +225,7 @@
         await beginExamUi(data.startedAt);
       } catch (error) {
         startButton.disabled = false;
-        startButton.textContent = 'Agree & start the 30-minute exam';
+        startButton.textContent = 'Agree & start the exam';
         document.getElementById('consentMessage').innerHTML = `<div class="error">${error.message}</div>`;
       }
     }
@@ -236,7 +236,9 @@
       if (me.error) throw new Error(me.error);
       if (me.avatarUrl) document.getElementById('avatar').src = me.avatarUrl;
       if (me.courseName) document.getElementById('courseName').textContent = me.courseName;
-      document.getElementById('participantLine').textContent = `${me.givenName} ${me.familyName} · 40 questions · ${Math.round(me.durationSeconds / 60)} minutes`;
+      const minutes = Math.round(me.durationSeconds / 60);
+      document.getElementById('participantLine').textContent = `${me.givenName} ${me.familyName} · 40 questions · ${minutes} minutes`;
+      document.getElementById('consentMinutes').textContent = minutes;
 
       if (me.submittedAt) { window.location.href = `/result.html?token=${encodeURIComponent(token)}`; return; }
       if (me.startedAt) {
