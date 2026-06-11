@@ -8,8 +8,8 @@ A lightweight Railway-ready web app for the WFITN Neurovascular Anatomy Course f
 - Participant registration: Given Name, Family Name, gender, email, institute, years post graduation, subspeciality
 - 40 neurovascular anatomy MCQs imported from the provided Markdown file (`cerebrovascular_MCQ_select1or2_variant_R4.md`)
 - Each question allows one or two answers, matching the original question wording
-- Rules/consent gate before the exam: an explicit warning not to use AI or any external help; the 30-minute timer starts only after the participant agrees
-- 30-minute timer (anchored to the server-side start time) with automatic submission
+- Rules/consent gate before the exam: an explicit warning not to use AI or any external help; the 40-minute timer starts only after the participant agrees
+- 40-minute timer (anchored to the server-side start time) with automatic submission
 - Server-side scoring using exact-match logic
 - Immediate personal result page: score, **rank within the cohort**, cohort mean, 偏差値. The review of missed questions (correct answers + explanations) is shown only after the administrator publishes the answers, so early submitters cannot see the key while others are still taking the exam. Open result pages pick up the published answers automatically.
 - Admin dashboard: summary, top 5, a **"Publish answers" toggle** that releases the missed-question review to participants, an on-demand **ranking by score** and **hardest 10 questions (lowest correct rate)**, full question correct rates and option-selection rates
@@ -31,7 +31,7 @@ A lightweight Railway-ready web app for the WFITN Neurovascular Anatomy Course f
    ADMIN_PASSWORD=<your strong password>
    COURSE_NAME=WFITN Neurovascular Anatomy Course Zurich 2026
    AVATAR_URL=https://avatars.githubusercontent.com/u/269770510?v=4
-   EXAM_DURATION_MINUTES=30
+   EXAM_DURATION_MINUTES=40
    ```
 
 5. After Railway gives the app a public domain, set:

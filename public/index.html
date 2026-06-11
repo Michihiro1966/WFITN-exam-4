@@ -11,7 +11,7 @@
     <img id="avatar" src="https://avatars.githubusercontent.com/u/269770510?v=4" alt="Course avatar">
     <div>
       <h1 id="courseName">WFITN Neurovascular Anatomy Course Zurich 2026</h1>
-      <p>Final neurovascular anatomy quiz · 40 questions · 30 minutes</p>
+      <p id="introLine">Final neurovascular anatomy quiz · 40 questions · <span id="durationMinutes">40</span> minutes</p>
     </div>
   </header>
 
@@ -81,6 +81,7 @@
       .then(r => r.json())
       .then(data => {
         if (data.courseName) document.getElementById('courseName').textContent = data.courseName;
+        if (data.durationMinutes) document.getElementById('durationMinutes').textContent = data.durationMinutes;
       })
       .catch(() => {});
 

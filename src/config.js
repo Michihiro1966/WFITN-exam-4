@@ -17,7 +17,7 @@ const config = {
   appBaseUrl: process.env.APP_BASE_URL || '',
   courseName: process.env.COURSE_NAME || 'WFITN Neurovascular Anatomy Course Zurich 2026',
   avatarUrl: process.env.AVATAR_URL || 'https://avatars.githubusercontent.com/u/269770510?v=4',
-  examDurationMinutes: parseIntWithFallback(process.env.EXAM_DURATION_MINUTES, 30),
+  examDurationMinutes: parseIntWithFallback(process.env.EXAM_DURATION_MINUTES, 40),
   smtp: {
     host: process.env.SMTP_HOST || '',
     port: parseIntWithFallback(process.env.SMTP_PORT, 587),

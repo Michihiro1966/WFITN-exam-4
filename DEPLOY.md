@@ -18,7 +18,7 @@ WFITN Neurovascular Anatomy Course — Zurich. Print this page and keep it at th
   DATABASE_URL=${{Postgres.DATABASE_URL}}
   ADMIN_PASSWORD=<a strong admin password>
   COURSE_NAME=WFITN Neurovascular Anatomy Course Zurich 2026
-  EXAM_DURATION_MINUTES=30
+  EXAM_DURATION_MINUTES=40
   AVATAR_URL=https://avatars.githubusercontent.com/u/269770510?v=4
   ```
 
@@ -63,9 +63,9 @@ WFITN Neurovascular Anatomy Course — Zurich. Print this page and keep it at th
   解説は「非公開（🔒）」のまま開始。全員終了まで公開しない。
 - [ ] Project the **QR code** (admin page) on the main screen.
 - [ ] Participants scan → register (Given/Family name, gender, institute, years, subspeciality, email)
-  → **agree to the AI-use rules** → the 30-minute timer starts per participant.
+  → **agree to the AI-use rules** → the 40-minute timer starts per participant.
 - [ ] Watch **Registered / Submitted** counts on the admin **Refresh** button as people progress.
-- [ ] The exam auto-submits at 30 minutes; participants can also submit early.
+- [ ] The exam auto-submits at 40 minutes; participants can also submit early.
 
 ---
 
@@ -89,7 +89,7 @@ WFITN Neurovascular Anatomy Course — Zurich. Print this page and keep it at th
   (e.g. if the answer is `b, c`, then `b` alone or `b, c, d` is wrong).
 - **Privacy:** never show the `/admin` URL or `ADMIN_PASSWORD` to participants.
 - **One device per participant:** the exam token is per-registration; reloading resumes the same timer
-  and cannot extend the 30 minutes.
+  and cannot extend the 40 minutes.
 - **Reset the database for a fresh run** (e.g. after rehearsal): in Railway → Postgres → **Data** /
   query, run:
 
