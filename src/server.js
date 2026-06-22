@@ -643,16 +643,27 @@ function buildFeedbackHtml(participant, resultRows, baseUrl) {
   return html;
 }
 
-async function sendFeedbackEmail(participant, resultRows, baseUrl) {
-  if (!config.smtp.enabled) {
-    throw new Error('SMTP is not configured. Set SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_FROM in Railway variables.');
-  }
-  const transporter = nodemailer.createTransport({
+function createTransporter() {
+  return nodemailer.createTransport({
     host: config.smtp.host,
     port: config.smtp.port,
     secure: config.smtp.secure,
-    auth: { user: config.smtp.user, pass: config.smtp.pass }
+    auth: { user: config.smtp.user, pass: config.smtp.pass },
+    // Reuse one pooled connection for all recipients and fail fast instead of
+    // hanging forever if Gmail is slow to answer or the credentials are wrong.
+    pool: true,
+    maxConnections: 3,
+    maxMessages: 100,
+    connectionTimeout: 15000,
+    greetingTimeout: 10000,
+    socketTimeout: 20000,
+    // Stay well under Gmail's rate limits for ~50 recipients.
+    rateDelta: 1000,
+    rateLimit: 5
   });
+}
+
+async function sendFeedbackEmail(transporter, participant, resultRows, baseUrl) {
   const html = buildFeedbackHtml(participant, resultRows, baseUrl);
   await transporter.sendMail({
     from: config.smtp.from,
@@ -674,6 +685,18 @@ app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
       ORDER BY submitted_at ASC
     `);
 
+    const transporter = createTransporter();
+    // Check the SMTP connection and login once up front so a bad password or a
+    // blocked connection returns a clear error immediately instead of hanging.
+    try {
+      await transporter.verify();
+    } catch (error) {
+      transporter.close();
+      return res.status(400).json({
+        error: `Could not connect to the mail server: ${error.message}. Check SMTP_HOST/PORT and, for Gmail, use a 16-character App Password (no spaces) as SMTP_PASS.`
+      });
+    }
+
     let sent = 0;
     const failures = [];
     const baseUrl = getBaseUrl(req);
@@ -681,7 +704,7 @@ app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
     for (const participant of participantResult.rows) {
       try {
         const rows = await query('SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC', [participant.id]);
-        await sendFeedbackEmail(participant, rows.rows, baseUrl);
+        await sendFeedbackEmail(transporter, participant, rows.rows, baseUrl);
         await query('UPDATE participants SET feedback_sent_at=NOW() WHERE id=$1', [participant.id]);
         sent += 1;
       } catch (error) {
@@ -689,7 +712,8 @@ app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
       }
     }
 
-    res.json({ ok: failures.length === 0, sent, failures });
+    transporter.close();
+    res.json({ ok: failures.length === 0, sent, total: participantResult.rows.length, failures });
   } catch (error) {
     next(error);
   }
