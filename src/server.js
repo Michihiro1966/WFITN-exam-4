@@ -2,6 +2,7 @@
 
 const path = require('path');
 const crypto = require('crypto');
+const https = require('https');
 const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -237,7 +238,7 @@ async function buildAdminSummary() {
     participants,
     top5,
     questionStats,
-    smtpEnabled: config.smtp.enabled,
+    smtpEnabled: config.emailEnabled,
     answersRevealed: await answersRevealed()
   };
 }
@@ -673,10 +674,56 @@ async function sendFeedbackEmail(transporter, participant, resultRows, baseUrl) 
   });
 }
 
+// Parse a "Name <email@example.com>" address into SendGrid's { email, name } shape.
+function parseFromAddress(value) {
+  const match = String(value).match(/^\s*(.*?)\s*<([^>]+)>\s*$/);
+  if (match) {
+    const from = { email: match[2].trim() };
+    if (match[1]) from.name = match[1].trim();
+    return from;
+  }
+  return { email: String(value).trim() };
+}
+
+// Send one email through SendGrid's HTTPS API (port 443), which Railway does not
+// block, unlike outbound SMTP.
+function sendViaSendgrid(toEmail, subject, html) {
+  return new Promise((resolve, reject) => {
+    const payload = JSON.stringify({
+      personalizations: [{ to: [{ email: toEmail }] }],
+      from: parseFromAddress(config.sendgrid.from),
+      subject,
+      content: [{ type: 'text/html', value: html }]
+    });
+    const request = https.request({
+      method: 'POST',
+      hostname: 'api.sendgrid.com',
+      path: '/v3/mail/send',
+      headers: {
+        Authorization: `Bearer ${config.sendgrid.apiKey}`,
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      },
+      timeout: 20000
+    }, response => {
+      let body = '';
+      response.on('data', chunk => { body += chunk; });
+      response.on('end', () => {
+        if (response.statusCode >= 200 && response.statusCode < 300) resolve();
+        else reject(new Error(`SendGrid ${response.statusCode}: ${body.slice(0, 300) || 'request rejected'}`));
+      });
+    });
+    request.on('error', reject);
+    request.on('timeout', () => request.destroy(new Error('SendGrid request timed out')));
+    request.write(payload);
+    request.end();
+  });
+}
+
 app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
   try {
-    if (!config.smtp.enabled) {
-      return res.status(400).json({ error: 'SMTP is not configured. Please set SMTP_HOST, SMTP_USER, SMTP_PASS, and SMTP_FROM.' });
+    if (!config.emailEnabled) {
+      return res.status(400).json({ error: 'Email is not configured. Set SENDGRID_API_KEY (recommended on Railway) or the SMTP_* variables.' });
     }
 
     const participantResult = await query(`
@@ -685,26 +732,34 @@ app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
       ORDER BY submitted_at ASC
     `);
 
-    const transporter = createTransporter();
-    // Check the SMTP connection and login once up front so a bad password or a
-    // blocked connection returns a clear error immediately instead of hanging.
-    try {
-      await transporter.verify();
-    } catch (error) {
-      transporter.close();
-      return res.status(400).json({
-        error: `Could not connect to the mail server: ${error.message}. Check SMTP_HOST/PORT and, for Gmail, use a 16-character App Password (no spaces) as SMTP_PASS.`
-      });
-    }
-
+    const subject = `${config.courseName}: your quiz feedback`;
+    const baseUrl = getBaseUrl(req);
     let sent = 0;
     const failures = [];
-    const baseUrl = getBaseUrl(req);
+
+    // Prefer SendGrid (HTTPS) since Railway blocks outbound SMTP; fall back to SMTP.
+    let transporter = null;
+    if (!config.sendgrid.enabled) {
+      transporter = createTransporter();
+      try {
+        await transporter.verify();
+      } catch (error) {
+        transporter.close();
+        return res.status(400).json({
+          error: `Could not connect to the mail server: ${error.message}. Railway blocks outbound SMTP — set SENDGRID_API_KEY instead.`
+        });
+      }
+    }
 
     for (const participant of participantResult.rows) {
       try {
         const rows = await query('SELECT question_id, selected, is_correct FROM responses WHERE participant_id=$1 ORDER BY question_id ASC', [participant.id]);
-        await sendFeedbackEmail(transporter, participant, rows.rows, baseUrl);
+        const html = buildFeedbackHtml(participant, rows.rows, baseUrl);
+        if (config.sendgrid.enabled) {
+          await sendViaSendgrid(participant.email, subject, html);
+        } else {
+          await sendFeedbackEmail(transporter, participant, rows.rows, baseUrl);
+        }
         await query('UPDATE participants SET feedback_sent_at=NOW() WHERE id=$1', [participant.id]);
         sent += 1;
       } catch (error) {
@@ -712,7 +767,7 @@ app.post('/api/admin/send-feedback', requireAdmin, async (req, res, next) => {
       }
     }
 
-    transporter.close();
+    if (transporter) transporter.close();
     res.json({ ok: failures.length === 0, sent, total: participantResult.rows.length, failures });
   } catch (error) {
     next(error);
