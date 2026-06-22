@@ -26,10 +26,19 @@ const config = {
     pass: process.env.SMTP_PASS || '',
     from: process.env.SMTP_FROM || 'WFITN Anatomy Course <no-reply@example.com>'
   },
+  sendgrid: {
+    apiKey: process.env.SENDGRID_API_KEY || '',
+    // The from address must be a verified Single Sender (or domain) in SendGrid.
+    // Falls back to SMTP_FROM so a single SMTP_FROM works for both transports.
+    from: process.env.SENDGRID_FROM || process.env.SMTP_FROM || 'WFITN Anatomy Course <no-reply@example.com>'
+  },
   nodeEnv: process.env.NODE_ENV || 'production'
 };
 
 config.examDurationSeconds = config.examDurationMinutes * 60;
 config.smtp.enabled = Boolean(config.smtp.host && config.smtp.user && config.smtp.pass);
+config.sendgrid.enabled = Boolean(config.sendgrid.apiKey && config.sendgrid.from);
+// SendGrid (HTTPS) is preferred because Railway blocks outbound SMTP ports.
+config.emailEnabled = config.sendgrid.enabled || config.smtp.enabled;
 
 module.exports = { config };

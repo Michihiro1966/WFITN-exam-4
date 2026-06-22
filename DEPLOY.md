@@ -31,8 +31,10 @@ WFITN Neurovascular Anatomy Course — Zurich. Print this page and keep it at th
   ```
 
 - [ ] **6. (Optional) Feedback emails.** Only if you want to *also* email each participant their
-  missed questions. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`.
-  メール送信を使う場合のみ SMTP を設定（任意）。
+  missed questions. **On Railway, use SendGrid — Railway blocks outbound SMTP.** Create a free
+  SendGrid account, verify a **Single Sender** (your from address), make an API key, then set
+  `SENDGRID_API_KEY` and `SENDGRID_FROM`. (SMTP is supported too but does not work on Railway.)
+  メール送信を使う場合：Railway は SMTP をブロックするため **SendGrid** を使用（`SENDGRID_API_KEY` / `SENDGRID_FROM`）。
 - [ ] **7. Health check.** Open `https://<domain>/health` → expect `{"ok":true,...}`.
 
 > Database SSL: `${{Postgres.DATABASE_URL}}` uses Railway's private network (no SSL needed). Only if
@@ -113,5 +115,6 @@ WFITN Neurovascular Anatomy Course — Zurich. Print this page and keep it at th
 | Health check fails / 502 | Confirm the PostgreSQL service is running and `DATABASE_URL` is set; check deploy logs. |
 | TLS/SSL connection error to Postgres | You are using a public DB URL — add `PGSSLMODE=require`. |
 | QR code points to the wrong URL | Set `APP_BASE_URL` to the generated public domain and redeploy. |
-| Feedback-email button is disabled | SMTP is not configured — set the `SMTP_*` variables (emails are optional). |
+| Feedback-email button is disabled | Email is not configured — set `SENDGRID_API_KEY` (recommended) or the `SMTP_*` variables. |
+| Email error "Could not connect / Connection timeout" | Railway blocks outbound SMTP. Switch to SendGrid: set `SENDGRID_API_KEY` + `SENDGRID_FROM` (verified Single Sender) and redeploy. |
 | Participants see answers too early | Make sure the admin status shows 🔒 **hidden**; only press **Publish answers** after everyone submits. |
