@@ -92,6 +92,7 @@ npm run build:questions
 src/      Express server, config, PostgreSQL access, scoring, question validator
 public/   Participant and admin web pages (static, served at /)
 data/     questions.json — the 40-question bank used for scoring and feedback
+.claude/skills/railway-web-exam-app/SKILL.md   Reusable playbook: build & deploy this kind of exam app on Railway (with the gotchas)
 cerebrovascular_MCQ_select1or2_variant_R4.md   Active source of the questions (R4 variant set)
 cerebrovascular_MCQ_select1or2_revised_R3.md   Previous question set (kept for reference)
 ```
