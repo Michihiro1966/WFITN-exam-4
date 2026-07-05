@@ -4,3 +4,6 @@ node_modules/
 npm-debug.log*
 *.xlsx
 .DS_Store
+
+# Obsidian vault mirroring — intermediate working files (not committed)
+vault_work/
